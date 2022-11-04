@@ -5,10 +5,19 @@
       :key="`assignment-${assignment.id}`"
       class="assignment row items-center non-selectable relative-position cursor-pointer"
       v-ripple.early
+      @click="
+        $router.push({
+          name: 'assignment',
+          params: { assignmentId: assignment.id },
+        })
+      "
     >
       <div class="col assignment-content">
-        <span class="assignment-title">{{ assignment.title }}</span><br />
-        <span class="assignment-lastUpdated">{{ formatDate(assignment.lastUpdate) }}</span>
+        <span class="assignment-title">{{ assignment.title }}</span
+        ><br />
+        <span class="assignment-lastUpdated">{{
+          formatDate(assignment.lastUpdate)
+        }}</span>
       </div>
       <div class="col-auto">
         <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />

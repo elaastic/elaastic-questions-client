@@ -7,9 +7,17 @@ const routes: RouteRecordRaw[] = [
     children: [
       {
         path: '',
-        component: () => import('pages/MyAssignmentsPage.vue'),
+        component: () => import('pages/MyAssignmentListPage.vue'),
         meta: {
           title: 'My assignments',
+        },
+      },
+      {
+        path: 'assignment/:assignmentId',
+        name: 'assignment',
+        component: () => import('pages/AssignmentPage.vue'),
+        meta: {
+          title: 'Assignment', // TODO Use asignment.title
         },
       },
     ],
