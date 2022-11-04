@@ -1,5 +1,5 @@
 <template>
-  <h1>{{ assignment.title }}</h1>
+  <page-title icon="book" :title="assignment.title" />
 </template>
 
 <script setup lang="ts">
@@ -8,6 +8,7 @@ import { useAssignmentStore } from 'stores/assignment-store';
 import { useRoute } from 'vue-router';
 import { parseIntFromUrlParam } from 'src/util/url';
 import { Assignment } from 'src/models/assignment.interface';
+import PageTitle from 'components/commons/PageTitle.vue';
 const assignmentStore = useAssignmentStore();
 const route = useRoute();
 
