@@ -1,13 +1,19 @@
 <template>
-  <base-todo name="AssignmentList" />
+  <q-list>
+    <q-item
+      v-for="assignment in myAssignmentList"
+      :key="`assignment-${assignment.id}`"
+    >
+      {{ assignment.title }}
+    </q-item>
+  </q-list>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useAssignmentStore } from 'stores/assignment-store';
+
+const assignmentStore = useAssignmentStore();
+const myAssignmentList = assignmentStore.myAssignmentList;
+</script>
 
 <style scoped></style>
-<script>
-import BaseTodo from '../components/dev/BaseTodo.vue';
-export default {
-  components: { BaseTodo },
-};
-</script>
