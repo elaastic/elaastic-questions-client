@@ -1,6 +1,4 @@
-<template>
-  <h1>My assignments</h1>
-</template>
+<template>TODO...</template>
 
 <script setup lang="ts"></script>
 

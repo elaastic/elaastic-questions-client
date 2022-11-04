@@ -2,7 +2,6 @@
   <q-layout view="hHh lpR fFf" class="bg-grey-1">
     <q-header elevated class="bg-elaastic text-white q-py-xs" height-hint="58">
       <q-toolbar>
-
         <q-btn
           flat
           dense
@@ -13,13 +12,15 @@
           to="/"
         />
 
-        <q-toolbar-title class="full-width">My assignments</q-toolbar-title>
-
+        <q-toolbar-title class="full-width">{{ title }}</q-toolbar-title>
 
         <div class="q-gutter-sm row items-center no-wrap">
           <q-btn round flat>
             <q-avatar size="26px">
-              <img src="https://cdn.quasar.dev/img/boy-avatar.png" alt="Account" />
+              <img
+                src="https://cdn.quasar.dev/img/boy-avatar.png"
+                alt="Account"
+              />
             </q-avatar>
             <q-tooltip>Account</q-tooltip>
           </q-btn>
@@ -33,11 +34,14 @@
   </q-layout>
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
+import { useRoute } from 'vue-router';
+import { computed } from 'vue';
 
-export default defineComponent({
-  name: 'MainLayout',
+const route = useRoute();
+
+const title = computed(() => {
+  return route.meta.title ?? 'elaastic';
 });
 </script>
 
