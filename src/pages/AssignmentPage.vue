@@ -15,9 +15,10 @@
       />
     </div>
 
-    <div>
-      {{ assignment.statements[currentQuestionIndex - 1].title }}
-    </div>
+    <base-question
+      :statement="assignment.statements[currentQuestionIndex - 1]"
+      :index="currentQuestionIndex"
+    />
   </template>
 </template>
 
@@ -28,6 +29,7 @@ import { useRoute } from 'vue-router';
 import { parseIntFromUrlParam } from 'src/util/url';
 import { Assignment } from 'src/models/assignment.interface';
 import PageTitle from 'components/commons/PageTitle.vue';
+import BaseQuestion from 'components/assignment/BaseQuestion.vue';
 const assignmentStore = useAssignmentStore();
 const route = useRoute();
 
