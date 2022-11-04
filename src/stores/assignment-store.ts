@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia';
-import { Assignment } from 'src/domain/assignment.interface';
+import { Assignment } from 'src/models/assignment.interface';
 
 interface AssignmentStoreState {
   myAssignmentList: Assignment[];

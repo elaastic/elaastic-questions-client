@@ -7,7 +7,7 @@ import { computed } from 'vue';
 import { useAssignmentStore } from 'stores/assignment-store';
 import { useRoute } from 'vue-router';
 import { parseIntFromUrlParam } from 'src/util/url';
-import { Assignment } from 'src/domain/assignment.interface';
+import { Assignment } from 'src/models/assignment.interface';
 const assignmentStore = useAssignmentStore();
 const route = useRoute();
 
