@@ -1,18 +1,28 @@
 <template>
   <page-title icon="book" :title="assignment.title" />
 
-  <ul>
-    <li
-      v-for="(statement, index) in assignment.statements"
-      :key="`${assignment.id}-statement-${index}`"
-    >
-      {{ statement.title }}
-    </li>
-  </ul>
+  <q-banner class="bg-negative" v-if="assignment.statements.length === 0">
+    There is no question in this assignment.
+  </q-banner>
+
+  <template v-else>
+    <div class="q-pa-sm flex flex-center">
+      Question n°
+      <q-pagination
+        class="q-ml-sm"
+        v-model="currentQuestionIndex"
+        :max="assignment.statements.length"
+      />
+    </div>
+
+    <div>
+      {{ assignment.statements[currentQuestionIndex - 1].title }}
+    </div>
+  </template>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useAssignmentStore } from 'stores/assignment-store';
 import { useRoute } from 'vue-router';
 import { parseIntFromUrlParam } from 'src/util/url';
@@ -31,6 +41,8 @@ const assignment = computed((): Assignment => {
 
   return assignment;
 });
+
+const currentQuestionIndex = ref(1);
 </script>
 
 <style scoped></style>
