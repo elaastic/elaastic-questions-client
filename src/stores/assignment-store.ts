@@ -8,6 +8,7 @@ interface AssignmentStoreState {
 export const useAssignmentStore = defineStore('assignment', {
   state: (): AssignmentStoreState => ({
     myAssignmentList: [
+      // TODO Use a Map
       {
         id: 1,
         title: 'Programmation dirigée par les tests',
@@ -25,4 +26,12 @@ export const useAssignmentStore = defineStore('assignment', {
       },
     ],
   }),
+  getters: {
+    get: (state) => {
+      return (assignmentId: number) =>
+        state.myAssignmentList.find(
+          (assignment: Assignment) => assignment.id === assignmentId
+        );
+    },
+  },
 });

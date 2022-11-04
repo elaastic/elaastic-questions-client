@@ -12,7 +12,9 @@
           to="/"
         />
 
-        <q-toolbar-title class="full-width">{{ title }}</q-toolbar-title>
+        <q-toolbar-title class="full-width"
+          ><span id="layout-title">{{ title }}</span></q-toolbar-title
+        >
 
         <div class="q-gutter-sm row items-center no-wrap">
           <q-btn round flat>
