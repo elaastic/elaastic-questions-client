@@ -1,8 +1,8 @@
 {
   "name": "elaastic-client",
   "version": "0.0.1",
-  "description": "A Quasar Project",
-  "productName": "Elaastic est un EIAH (Environnement Informatique pour l’Apprentissage Humain) dédiée à l’orchestration de séquences d’évaluations formatives pendant les cours en face à face ou à distance. Nos travaux de recherche portent sur la conception de systèmes technologiques permettant d’améliorer la mise en oeuvre de telles séquences pédagogiques dans le contexte d’un enseignement de masse.",
+  "description": "Elaastic est un EIAH (Environnement Informatique pour l’Apprentissage Humain) dédiée à l’orchestration de séquences d’évaluations formatives pendant les cours en face à face ou à distance. Nos travaux de recherche portent sur la conception de systèmes technologiques permettant d’améliorer la mise en oeuvre de telles séquences pédagogiques dans le contexte d’un enseignement de masse.",
+  "productName": "Elaastic",
   "author": "John Tranier <john.tranier@ticetime.com>",
   "private": true,
   "scripts": {
