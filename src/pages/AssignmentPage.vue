@@ -1,5 +1,14 @@
 <template>
   <page-title icon="book" :title="assignment.title" />
+
+  <ul>
+    <li
+      v-for="(statement, index) in assignment.statements"
+      :key="`${assignment.id}-statement-${index}`"
+    >
+      {{ statement.title }}
+    </li>
+  </ul>
 </template>
 
 <script setup lang="ts">
