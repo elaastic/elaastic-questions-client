@@ -1,9 +1,13 @@
 <template>
-  <base-todo :name="`Summary of sequence '${sequence.statement.title}'`" />
+  <q-card>
+    <q-card-section>{{ sequence.statement.title }}</q-card-section>
+    <q-card-section>
+      {{ sequence.statement.content }}
+    </q-card-section>
+  </q-card>
 </template>
 
 <script setup lang="ts">
-import BaseTodo from 'components/dev/BaseTodo.vue';
 import { PropType } from 'vue';
 import { Sequence } from 'src/models/assignment.interface';
 

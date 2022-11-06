@@ -88,7 +88,7 @@ export const useAssignmentStore = defineStore('assignment', {
           properties: {
             id: { type: 'integer', ipsum: 'id' },
             title: { type: 'string', ipsum: 'title' },
-            content: { type: 'string', format: 'paragraph' },
+            content: { type: 'string', ipsum: 'sentence' },
           },
         },
         {
