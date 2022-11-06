@@ -1,9 +1,10 @@
 import { defineStore } from 'pinia';
-import { Assignment } from 'src/models/assignment.interface';
+import { Assignment, Sequence } from 'src/models/assignment.interface';
 import axios from 'axios';
 
 interface AssignmentStoreState {
   metadata: {
+    initialized: boolean;
     loading: boolean;
     error: null | Error;
   };
@@ -14,6 +15,7 @@ interface AssignmentStoreState {
 export const useAssignmentStore = defineStore('assignment', {
   state: (): AssignmentStoreState => ({
     metadata: {
+      initialized: false,
       loading: false,
       error: null,
     },
@@ -28,7 +30,7 @@ export const useAssignmentStore = defineStore('assignment', {
     },
   },
   actions: {
-    async loadData() {
+    async loadMyAssignments() {
       this.metadata.loading = true;
       this.metadata.error = null;
 
@@ -38,7 +40,6 @@ export const useAssignmentStore = defineStore('assignment', {
           {
             type: 'object',
             properties: {
-              id: { type: 'integer', ipsum: 'id' },
               title: { type: 'string', ipsum: 'title' },
               lastUpdate: { type: 'string', format: 'date-time' },
             },
@@ -49,30 +50,76 @@ export const useAssignmentStore = defineStore('assignment', {
         );
 
         this.myAssignmentMap = response.data.reduce(
-          (acc: Map<number, Assignment>, data: FakedAssignmentData) => {
-            acc.set(data.id, {
+          (
+            acc: Map<number, Assignment>,
+            data: FakedAssignmentData,
+            index: number
+          ) => {
+            acc.set(index, {
               ...data,
+              id: index,
               sequences: 'NotLoadedYet',
               lastUpdate: new Date(data.lastUpdate),
+              nbSequence: Math.random() * (20 - 3) + 3,
             });
             return acc;
           },
           new Map()
         );
-
-        console.info(this.myAssignmentMap);
       } catch (e: unknown) {
         // TODO Handle error
         this.metadata.error = Error(e?.toString());
       } finally {
         this.metadata.loading = false;
+        this.metadata.initialized = true;
       }
+    },
+    async loadSequences(assignmentId: number) {
+      const assignment = this.myAssignmentMap.get(assignmentId);
+
+      if (!assignment) {
+        throw new Error(`The is no assignment for id='${assignmentId}'`);
+      }
+
+      const response = await axios.post<FakedSequenceData[]>(
+        'http://schematic-ipsum.herokuapp.com',
+        {
+          type: 'object',
+          properties: {
+            id: { type: 'integer', ipsum: 'id' },
+            title: { type: 'string', ipsum: 'title' },
+            content: { type: 'string', format: 'paragraph' },
+          },
+        },
+        {
+          params: { n: assignment.nbSequence },
+        }
+      );
+
+      assignment.sequences = response.data.reduce(
+        (acc: Sequence[], sequenceData: FakedSequenceData) => {
+          acc.push({
+            id: sequenceData.id,
+            statement: {
+              title: sequenceData.title,
+              content: sequenceData.content,
+            },
+          });
+          return acc;
+        },
+        []
+      );
     },
   },
 });
 
 interface FakedAssignmentData {
-  id: number;
   title: string;
   lastUpdate: string;
+}
+
+interface FakedSequenceData {
+  id: number;
+  title: string;
+  content: string;
 }

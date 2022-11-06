@@ -3,6 +3,7 @@ export interface Assignment {
   title: string;
   lastUpdate: Date;
   sequences: Sequence[] | 'NotLoadedYet';
+  nbSequence: number;
 }
 
 export interface Sequence {

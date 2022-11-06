@@ -8,5 +8,5 @@ import {useAssignmentStore} from 'stores/assignment-store';
 
 const assignmentStore = useAssignmentStore()
 
-assignmentStore.loadData()
+assignmentStore.loadMyAssignments()
 </script>
