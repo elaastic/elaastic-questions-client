@@ -1,49 +1,23 @@
 import { defineStore } from 'pinia';
 import { Assignment } from 'src/models/assignment.interface';
+import axios from 'axios';
 
 interface AssignmentStoreState {
-  myAssignmentList: Assignment[];
+  metadata: {
+    loading: boolean;
+    error: null | Error;
+  };
+
+  myAssignmentList: Assignment[]; // TODO Use a Map
 }
 
 export const useAssignmentStore = defineStore('assignment', {
   state: (): AssignmentStoreState => ({
-    myAssignmentList: [
-      // TODO Use a Map
-      {
-        id: 1,
-        title: 'Programmation dirigée par les tests',
-        lastUpdate: new Date(),
-        sequences: [
-          {
-            id: 1,
-            statement: {
-              title: 'La question originelle',
-              content: '<div><strong>Hello World !</strong></div>',
-            },
-          },
-          {
-            id: 2,
-            statement: {
-              title: 'La question qui vient juste après',
-              content:
-                '<div>Vous préférez ? <ul><li>Le choix A</li><li>le choix B</li></ul></div>',
-            },
-          },
-        ],
-      },
-      {
-        id: 2,
-        title: 'VueJS 3 - API composition',
-        lastUpdate: new Date(),
-        sequences: [],
-      },
-      {
-        id: 3,
-        title: 'Spring Boot',
-        lastUpdate: new Date(),
-        sequences: [],
-      },
-    ],
+    metadata: {
+      loading: false,
+      error: null,
+    },
+    myAssignmentList: [],
   }),
   getters: {
     get: (state) => {
@@ -51,6 +25,42 @@ export const useAssignmentStore = defineStore('assignment', {
         state.myAssignmentList.find(
           (assignment: Assignment) => assignment.id === assignmentId
         );
+    },
+  },
+  actions: {
+    async loadData() {
+      this.metadata.loading = true;
+      this.metadata.error = null;
+
+      try {
+        const response = await axios.post(
+          'http://schematic-ipsum.herokuapp.com',
+          {
+            type: 'object',
+            properties: {
+              id: { type: 'integer', ipsum: 'id' },
+              title: { type: 'string', ipsum: 'title' },
+              lastUpdate: { type: 'string', format: 'date-time' },
+            },
+          },
+          {
+            params: { n: 15 },
+          }
+        );
+
+        this.myAssignmentList = response.data.map((data: any) => {
+          return {
+            ...data,
+            sequences: [],
+            lastUpdate: new Date(data.lastUpdate),
+          };
+        });
+      } catch (e: unknown) {
+        // TODO Handle error
+        this.metadata.error = Error(e?.toString());
+      } finally {
+        this.metadata.loading = false;
+      }
     },
   },
 });

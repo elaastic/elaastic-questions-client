@@ -2,10 +2,11 @@
   <router-view />
 </template>
 
-<script lang="ts">
-import { defineComponent } from 'vue';
+<script setup lang="ts">
 
-export default defineComponent({
-  name: 'App',
-});
+import {useAssignmentStore} from 'stores/assignment-store';
+
+const assignmentStore = useAssignmentStore()
+
+assignmentStore.loadData()
 </script>
