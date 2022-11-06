@@ -23,7 +23,7 @@ export const useAssignmentStore = defineStore('assignment', {
   }),
   getters: {
     getAll: (state) => {
-      return state.myAssignmentMap.values();
+      return Array.from(state.myAssignmentMap.values());
     },
     get: (state) => {
       return (assignmentId: number) => state.myAssignmentMap.get(assignmentId);
