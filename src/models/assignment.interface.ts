@@ -2,7 +2,7 @@ export interface Assignment {
   id: number;
   title: string;
   lastUpdate: Date;
-  sequences: Sequence[];
+  sequences: Sequence[] | 'NotLoadedYet';
 }
 
 export interface Sequence {

@@ -34,7 +34,7 @@ import { useQuasar } from 'quasar';
 
 const $q = useQuasar();
 const assignmentStore = useAssignmentStore();
-const myAssignmentList = computed(() => assignmentStore.myAssignmentList);
+const myAssignmentList = computed(() => assignmentStore.getAll);
 const loading = computed(() => assignmentStore.metadata.loading);
 
 watchEffect(() => {

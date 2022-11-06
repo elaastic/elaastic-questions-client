@@ -8,7 +8,7 @@ interface AssignmentStoreState {
     error: null | Error;
   };
 
-  myAssignmentList: Assignment[]; // TODO Use a Map
+  myAssignmentMap: Map<number, Assignment>;
 }
 
 export const useAssignmentStore = defineStore('assignment', {
@@ -17,14 +17,14 @@ export const useAssignmentStore = defineStore('assignment', {
       loading: false,
       error: null,
     },
-    myAssignmentList: [],
+    myAssignmentMap: new Map<number, Assignment>(),
   }),
   getters: {
+    getAll: (state) => {
+      return state.myAssignmentMap.values();
+    },
     get: (state) => {
-      return (assignmentId: number) =>
-        state.myAssignmentList.find(
-          (assignment: Assignment) => assignment.id === assignmentId
-        );
+      return (assignmentId: number) => state.myAssignmentMap.get(assignmentId);
     },
   },
   actions: {
@@ -33,7 +33,7 @@ export const useAssignmentStore = defineStore('assignment', {
       this.metadata.error = null;
 
       try {
-        const response = await axios.post(
+        const response = await axios.post<FakedAssignmentData[]>(
           'http://schematic-ipsum.herokuapp.com',
           {
             type: 'object',
@@ -48,13 +48,19 @@ export const useAssignmentStore = defineStore('assignment', {
           }
         );
 
-        this.myAssignmentList = response.data.map((data: any) => {
-          return {
-            ...data,
-            sequences: [],
-            lastUpdate: new Date(data.lastUpdate),
-          };
-        });
+        this.myAssignmentMap = response.data.reduce(
+          (acc: Map<number, Assignment>, data: FakedAssignmentData) => {
+            acc.set(data.id, {
+              ...data,
+              sequences: 'NotLoadedYet',
+              lastUpdate: new Date(data.lastUpdate),
+            });
+            return acc;
+          },
+          new Map()
+        );
+
+        console.info(this.myAssignmentMap);
       } catch (e: unknown) {
         // TODO Handle error
         this.metadata.error = Error(e?.toString());
@@ -64,3 +70,9 @@ export const useAssignmentStore = defineStore('assignment', {
     },
   },
 });
+
+interface FakedAssignmentData {
+  id: number;
+  title: string;
+  lastUpdate: string;
+}
