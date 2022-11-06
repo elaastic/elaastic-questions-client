@@ -13,15 +13,21 @@ export const useAssignmentStore = defineStore('assignment', {
         id: 1,
         title: 'Programmation dirigée par les tests',
         lastUpdate: new Date(),
-        statements: [
+        sequences: [
           {
-            title: 'La question originelle',
-            content: '<div><strong>Hello World !</strong></div>',
+            id: 1,
+            statement: {
+              title: 'La question originelle',
+              content: '<div><strong>Hello World !</strong></div>',
+            },
           },
           {
-            title: 'La question qui vient juste après',
-            content:
-              '<div>Vous préférez ? <ul><li>Le choix A</li><li>le choix B</li></ul></div>',
+            id: 2,
+            statement: {
+              title: 'La question qui vient juste après',
+              content:
+                '<div>Vous préférez ? <ul><li>Le choix A</li><li>le choix B</li></ul></div>',
+            },
           },
         ],
       },
@@ -29,13 +35,13 @@ export const useAssignmentStore = defineStore('assignment', {
         id: 2,
         title: 'VueJS 3 - API composition',
         lastUpdate: new Date(),
-        statements: [],
+        sequences: [],
       },
       {
         id: 3,
         title: 'Spring Boot',
         lastUpdate: new Date(),
-        statements: [],
+        sequences: [],
       },
     ],
   }),

@@ -7,7 +7,7 @@
       v-ripple.early
       @click="
         $router.push({
-          name: 'assignment',
+          name: 'assignment-summary',
           params: { assignmentId: assignment.id },
         })
       "
