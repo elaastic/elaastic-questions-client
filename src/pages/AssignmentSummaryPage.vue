@@ -1,6 +1,6 @@
 <template>
   <template v-if="assignment">
-    <page-title icon="book" :title="assignment.title" />
+    <page-title icon="menu_book" :title="assignment.title" />
 
     <q-banner class="bg-negative" v-if="assignment.nbSequence === 0">
       There is no sequence in this assignment.
