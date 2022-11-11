@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md">
+  <div class="q-pa-md" style="max-width: 800px; margin: auto">
     <div
       v-for="assignment in myAssignmentList"
       :key="`assignment-${assignment.id}`"
