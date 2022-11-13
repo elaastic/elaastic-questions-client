@@ -4,7 +4,6 @@ import axios from 'axios';
 import {
   DefaultSequence,
   pickRandomState,
-  Sequence,
 } from 'src/models/sequence.interface';
 
 interface AssignmentStoreState {

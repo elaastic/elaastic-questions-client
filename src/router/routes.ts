@@ -13,14 +13,6 @@ const routes: RouteRecordRaw[] = [
         },
       },
       {
-        path: 'assignment/:assignmentId',
-        name: 'assignment',
-        component: () => import('pages/AssignmentPage.vue'),
-        meta: {
-          title: 'Assignment',
-        },
-      },
-      {
         path: 'assignment/:assignmentId/summary',
         name: 'assignment-summary',
         component: () => import('pages/AssignmentSummaryPage.vue'),
