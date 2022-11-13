@@ -1,6 +1,11 @@
 import { defineStore } from 'pinia';
-import { Assignment, Sequence } from 'src/models/assignment.interface';
+import { Assignment } from 'src/models/assignment.interface';
 import axios from 'axios';
+import {
+  DefaultSequence,
+  pickRandomState,
+  Sequence,
+} from 'src/models/sequence.interface';
 
 interface AssignmentStoreState {
   metadata: {
@@ -89,6 +94,8 @@ export const useAssignmentStore = defineStore('assignment', {
             id: { type: 'integer', ipsum: 'id' },
             title: { type: 'string', ipsum: 'title' },
             content: { type: 'string', ipsum: 'sentence' },
+            activeInteractionIndex: { type: 'integer', enum: [0, 1, 2] },
+            resultsArePublished: { type: 'boolean' },
           },
         },
         {
@@ -97,14 +104,25 @@ export const useAssignmentStore = defineStore('assignment', {
       );
 
       assignment.sequences = response.data.reduce(
-        (acc: Sequence[], sequenceData: FakedSequenceData) => {
-          acc.push({
-            id: sequenceData.id,
-            statement: {
-              title: sequenceData.title,
-              content: sequenceData.content,
-            },
-          });
+        (acc: DefaultSequence[], sequenceData: FakedSequenceData) => {
+          acc.push(
+            new DefaultSequence({
+              id: sequenceData.id,
+              statement: {
+                title: sequenceData.title,
+                content: sequenceData.content,
+              },
+              state: pickRandomState(),
+              interactions: [
+                { type: 'RESPONSE_SUBMISSION' },
+                { type: 'EVALUATION' },
+                { type: 'READ' },
+              ],
+              activeInteractionIndex: sequenceData.activeInteractionIndex,
+              resultsArePublished: sequenceData.resultsArePublished,
+            })
+          );
+
           return acc;
         },
         []
@@ -122,4 +140,6 @@ interface FakedSequenceData {
   id: number;
   title: string;
   content: string;
+  activeInteractionIndex: number;
+  resultsArePublished: boolean;
 }

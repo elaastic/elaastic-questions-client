@@ -5,14 +5,20 @@
     </div>
     <div class="col text-weight-bold">{{ sequence.statement.title }}</div>
     <div class="col-auto">
-      <q-icon :name="stateIcon" size="xl" color="grey" />
+      <q-icon
+        v-for="(icon, index) in stateIcons"
+        :key="`state-${sequence.id}-${index}`"
+        :name="icon"
+        size="xl"
+        color="grey"
+      />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed, PropType } from 'vue';
-import { Sequence } from 'src/models/assignment.interface';
+import { Sequence, sequenceIcons } from 'src/models/sequence.interface';
 
 const props = defineProps({
   sequence: {
@@ -22,15 +28,8 @@ const props = defineProps({
   num: Number,
 });
 
-const stateIcon = computed((): string => {
-  const states = [
-    'edit',
-    'fact_check',
-    'pause',
-    'not_started',
-    'forum'
-  ];
-  return states[(props.num ?? 0) % states.length];
+const stateIcons = computed((): string[] => {
+  return sequenceIcons(props.sequence);
 });
 </script>
 

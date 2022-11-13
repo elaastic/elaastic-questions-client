@@ -12,8 +12,9 @@
 <script setup lang="ts">
 import SequenceSummary from 'components/assignment/SequenceSummary.vue';
 import { computed, PropType } from 'vue';
-import { Assignment, Sequence } from 'src/models/assignment.interface';
+import { Assignment } from 'src/models/assignment.interface';
 import { useAssignmentStore } from 'stores/assignment-store';
+import {Sequence} from 'src/models/sequence.interface';
 
 const props = defineProps({
   assignment: {
