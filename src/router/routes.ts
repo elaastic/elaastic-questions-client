@@ -20,6 +20,14 @@ const routes: RouteRecordRaw[] = [
           title: 'Assignment Summary',
         },
       },
+      {
+        path: 'assignment/:assignmentId/play/:sequenceIndex',
+        name: 'play-sequence',
+        component: () => import('pages/SequencePlayPage.vue'),
+        meta: {
+          title: 'Play sequence',
+        },
+      },
     ],
   },
 
