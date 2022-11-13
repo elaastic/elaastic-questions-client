@@ -2,14 +2,22 @@
   <q-layout view="hHh lpR fFf" class="bg-grey-1">
     <q-header elevated class="bg-elaastic text-white q-py-xs" height-hint="58">
       <q-toolbar>
-        <q-btn
+        <q-icon
+          v-if="isHomePage"
           flat
           dense
           round
-          icon="img:src/assets/elaastic_picto_rvb.png"
+          name="img:src/assets/elaastic_picto_rvb.png"
+          size="34px"
+        />
+        <q-btn
+          v-else
+          flat
+          dense
+          round
+          icon="arrow_back_ios"
           aria-label="Menu"
-          size="20px"
-          to="/"
+          @click="$router.go(-1)"
         />
 
         <q-toolbar-title class="full-width"
@@ -44,6 +52,10 @@ const route = useRoute();
 
 const title = computed(() => {
   return route.meta.title ?? 'elaastic';
+});
+
+const isHomePage = computed(() => {
+  return route.meta.home;
 });
 </script>
 

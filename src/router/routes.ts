@@ -9,6 +9,7 @@ const routes: RouteRecordRaw[] = [
         path: '',
         component: () => import('pages/MyAssignmentListPage.vue'),
         meta: {
+          home: true,
           title: 'My assignments',
         },
       },
