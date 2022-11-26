@@ -12,3 +12,11 @@ export interface ServerAssignmentData {
   title: string;
   lastUpdate: string;
 }
+
+export interface ServerSequenceData {
+  id: number;
+  title: string;
+  content: string;
+  activeInteractionIndex: number;
+  resultsArePublished: boolean;
+}

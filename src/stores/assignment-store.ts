@@ -2,8 +2,8 @@ import { defineStore } from 'pinia';
 import {
   Assignment,
   ServerAssignmentData,
+  ServerSequenceData,
 } from 'src/models/assignment.interface';
-import axios from 'axios';
 import {
   DefaultSequence,
   pickRandomState,
@@ -77,25 +77,10 @@ export const useAssignmentStore = defineStore('assignment', {
         throw new Error(`The is no assignment for id='${assignmentId}'`);
       }
 
-      const response = await axios.post<FakedSequenceData[]>(
-        'http://schematic-ipsum.herokuapp.com',
-        {
-          type: 'object',
-          properties: {
-            id: { type: 'integer', ipsum: 'id' },
-            title: { type: 'string', ipsum: 'title' },
-            content: { type: 'string', ipsum: 'sentence' },
-            activeInteractionIndex: { type: 'integer', enum: [0, 1, 2] },
-            resultsArePublished: { type: 'boolean' },
-          },
-        },
-        {
-          params: { n: assignment.nbSequence },
-        }
-      );
+      const data = await assignmentService.getSequences(assignmentId);
 
-      assignment.sequences = response.data.reduce(
-        (acc: DefaultSequence[], sequenceData: FakedSequenceData) => {
+      assignment.sequences = data.reduce(
+        (acc: DefaultSequence[], sequenceData: ServerSequenceData) => {
           acc.push(
             new DefaultSequence({
               id: sequenceData.id,
@@ -121,11 +106,3 @@ export const useAssignmentStore = defineStore('assignment', {
     },
   },
 });
-
-interface FakedSequenceData {
-  id: number;
-  title: string;
-  content: string;
-  activeInteractionIndex: number;
-  resultsArePublished: boolean;
-}
