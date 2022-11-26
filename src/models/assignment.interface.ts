@@ -4,6 +4,6 @@ export interface Assignment {
   id: number;
   title: string;
   lastUpdate: Date;
-  sequences: Sequence[] | 'NotLoadedYet';
+  sequences: Sequence[] | 'NotLoadedYet' | 'Loading';
   nbSequence: number;
 }
