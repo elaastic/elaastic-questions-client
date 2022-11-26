@@ -7,3 +7,8 @@ export interface Assignment {
   sequences: Sequence[] | 'NotLoadedYet' | 'Loading';
   nbSequence: number;
 }
+
+export interface ServerAssignmentData {
+  title: string;
+  lastUpdate: string;
+}

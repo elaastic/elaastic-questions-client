@@ -1,10 +1,14 @@
 import { defineStore } from 'pinia';
-import { Assignment } from 'src/models/assignment.interface';
+import {
+  Assignment,
+  ServerAssignmentData,
+} from 'src/models/assignment.interface';
 import axios from 'axios';
 import {
   DefaultSequence,
   pickRandomState,
 } from 'src/models/sequence.interface';
+import { assignmentService } from 'src/services/assignment-service';
 
 interface AssignmentStoreState {
   metadata: {
@@ -39,24 +43,12 @@ export const useAssignmentStore = defineStore('assignment', {
       this.metadata.error = null;
 
       try {
-        const response = await axios.post<FakedAssignmentData[]>(
-          'http://schematic-ipsum.herokuapp.com',
-          {
-            type: 'object',
-            properties: {
-              title: { type: 'string', ipsum: 'title' },
-              lastUpdate: { type: 'string', format: 'date-time' },
-            },
-          },
-          {
-            params: { n: 15 },
-          }
-        );
+        const data = await assignmentService.getMyAssignments();
 
-        this.myAssignmentMap = response.data.reduce(
+        this.myAssignmentMap = data.reduce(
           (
             acc: Map<number, Assignment>,
-            data: FakedAssignmentData,
+            data: ServerAssignmentData,
             index: number
           ) => {
             acc.set(index, {
@@ -129,11 +121,6 @@ export const useAssignmentStore = defineStore('assignment', {
     },
   },
 });
-
-interface FakedAssignmentData {
-  title: string;
-  lastUpdate: string;
-}
 
 interface FakedSequenceData {
   id: number;
