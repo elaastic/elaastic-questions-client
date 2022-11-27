@@ -27,7 +27,7 @@ export class DefaultSequence implements Sequence {
   }
 
   getActiveInteraction(): Interaction | null {
-    return this.activeInteractionIndex
+    return this.activeInteractionIndex !== undefined
       ? this.interactions[this.activeInteractionIndex]
       : null;
   }
