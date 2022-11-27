@@ -1,5 +1,5 @@
 <template>
-  <template v-if="assignment">
+  <q-page v-if="assignment">
     <page-title icon="menu_book" :title="assignment.title" />
 
     <q-banner class="bg-negative" v-if="assignment.nbSequence === 0">
@@ -9,22 +9,25 @@
     <template v-else>
       <assignment-summary :assignment="assignment" />
     </template>
-  </template>
+  </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, watchEffect } from 'vue';
 import { useAssignmentStore } from 'stores/assignment-store';
 import { useRoute } from 'vue-router';
 import { parseIntFromUrlParam } from 'src/util/url';
 import { Assignment } from 'src/models/assignment.interface';
 import PageTitle from 'components/commons/PageTitle.vue';
 import AssignmentSummary from 'components/assignment/AssignmentSummary.vue';
+import { useQuasar } from 'quasar';
+
+const $q = useQuasar();
 const assignmentStore = useAssignmentStore();
 const route = useRoute();
 
 const assignment = computed((): Assignment | undefined => {
-  if(!assignmentStore.metadata.initialized) {
+  if (!assignmentStore.metadata.initialized) {
     return undefined;
   }
 
@@ -38,6 +41,15 @@ const assignment = computed((): Assignment | undefined => {
   return assignment;
 });
 
+const loading = computed(() => assignmentStore.metadata.loading);
+
+watchEffect(() => {
+  if (loading.value) {
+    $q.loading.show({ message: 'Loading assignments...' });
+  } else {
+    $q.loading.hide();
+  }
+});
 </script>
 
 <style scoped></style>

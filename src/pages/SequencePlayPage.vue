@@ -15,7 +15,7 @@ const assignmentStore = useAssignmentStore();
 const route = useRoute();
 
 const assignment = computed((): Assignment | undefined => {
-  if(!assignmentStore.metadata.initialized) {
+  if (!assignmentStore.metadata.initialized) {
     return undefined;
   }
 
@@ -28,7 +28,6 @@ const assignment = computed((): Assignment | undefined => {
 
   return assignment;
 });
-
 </script>
 
 <style scoped></style>

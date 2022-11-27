@@ -3,10 +3,9 @@
 </template>
 
 <script setup lang="ts">
+import { useAssignmentStore } from 'stores/assignment-store';
 
-import {useAssignmentStore} from 'stores/assignment-store';
+const assignmentStore = useAssignmentStore();
 
-const assignmentStore = useAssignmentStore()
-
-assignmentStore.loadMyAssignments()
+assignmentStore.loadMyAssignments();
 </script>

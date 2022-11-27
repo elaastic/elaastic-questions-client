@@ -1,5 +1,5 @@
 <template>
-  <div class="q-pa-md" style="max-width: 800px; margin: auto">
+  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
     <div
       v-for="assignment in myAssignmentList"
       :key="`assignment-${assignment.id}`"
@@ -23,13 +23,13 @@
         <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />
       </div>
     </div>
-  </div>
+  </q-page>
 </template>
 
 <script setup lang="ts">
 import { useAssignmentStore } from 'stores/assignment-store';
 import { formatDate } from 'src/util/date';
-import {computed, watchEffect} from 'vue';
+import { computed, watchEffect } from 'vue';
 import { useQuasar } from 'quasar';
 
 const $q = useQuasar();
