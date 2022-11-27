@@ -41,4 +41,9 @@ const stateIcons = computed((): string[] => {
 .row.bordered {
   border-bottom: 1px solid lightslategray;
 }
+
+.row.bordered:last-child {
+  border-bottom: none;
+}
+
 </style>
