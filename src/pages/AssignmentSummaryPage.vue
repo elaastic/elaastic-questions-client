@@ -6,9 +6,7 @@
       There is no sequence in this assignment.
     </q-banner>
 
-    <template v-else>
-      <assignment-summary :assignment="assignment" />
-    </template>
+    <assignment-summary v-else :assignment="assignment" />
   </q-page>
 </template>
 
@@ -41,11 +39,21 @@ const assignment = computed((): Assignment | undefined => {
   return assignment;
 });
 
-const loading = computed(() => assignmentStore.metadata.loading);
+const loading = computed(() => {
+  if(assignmentStore.metadata.loading) {
+    return { message: "Loading assignments..." }
+  }
+  else if(assignment.value?.sequences === "Loading") {
+    return  { message: "Loading sequences..." }
+  }
+  else {
+    return false
+  }
+});
 
 watchEffect(() => {
   if (loading.value) {
-    $q.loading.show({ message: "Loading assignments..." });
+    $q.loading.show(loading.value);
   } else {
     $q.loading.hide();
   }

@@ -1,8 +1,5 @@
 <template>
-  <div class="q-ma-sm sequences" style="position: relative">
-    <q-inner-loading :showing="assignment.sequences === 'Loading'">
-      <q-spinner-gears size="50px" color="primary" />
-    </q-inner-loading>
+  <div class="q-ma-sm sequences" v-if="sequences">
 
     <sequence-summary
       v-for="(sequence, index) in sequences"
@@ -32,12 +29,13 @@ const props = defineProps({
 const assignmentStore = useAssignmentStore();
 const router = useRouter();
 
+if (props.assignment.sequences === "NotLoadedYet") {
+  assignmentStore.loadSequences(props.assignment.id);
+}
+
 const sequences = computed((): Sequence[] | undefined => {
   switch (props.assignment.sequences) {
     case "NotLoadedYet":
-      assignmentStore.loadSequences(props.assignment.id);
-      return undefined;
-
     case "Loading":
       return undefined;
 
