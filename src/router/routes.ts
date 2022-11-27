@@ -1,4 +1,5 @@
 import { RouteRecordRaw } from "vue-router";
+import { parseIntFromUrlParam } from "src/util/url";
 
 const routes: RouteRecordRaw[] = [
   {
@@ -17,6 +18,9 @@ const routes: RouteRecordRaw[] = [
         path: "assignment/:assignmentId/summary",
         name: "assignment-summary",
         component: () => import("pages/AssignmentSummaryPage.vue"),
+        props: (route) => ({
+          assignmentId: parseIntFromUrlParam(route.params.assignmentId)
+        }),
         meta: {
           title: "Assignment Summary",
         },
@@ -25,6 +29,9 @@ const routes: RouteRecordRaw[] = [
         path: "assignment/:assignmentId/play/:sequenceIndex",
         name: "play-sequence",
         component: () => import("pages/SequencePlayPage.vue"),
+        props: (route) => ({
+          assignmentId: parseIntFromUrlParam(route.params.assignmentId)
+        }),
         meta: {
           title: "Play sequence",
         },
