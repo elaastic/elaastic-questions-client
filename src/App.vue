@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { useAssignmentStore } from 'stores/assignment-store';
+import { useAssignmentStore } from "stores/assignment-store";
 
 const assignmentStore = useAssignmentStore();
 

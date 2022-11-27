@@ -9,8 +9,8 @@
 </template>
 
 <script setup lang="ts">
-import { PropType } from 'vue';
-import { Statement } from 'src/models/sequence.interface';
+import { PropType } from "vue";
+import { Statement } from "src/models/sequence.interface";
 
 defineProps({
   statement: Object as PropType<Statement>,

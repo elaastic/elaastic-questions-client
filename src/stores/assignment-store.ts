@@ -1,14 +1,14 @@
-import { defineStore } from 'pinia';
+import { defineStore } from "pinia";
 import {
   Assignment,
   ServerAssignmentData,
   ServerSequenceData,
-} from 'src/models/assignment.interface';
+} from "src/models/assignment.interface";
 import {
   DefaultSequence,
   pickRandomState,
-} from 'src/models/sequence.interface';
-import { assignmentService } from 'src/services/assignment-service';
+} from "src/models/sequence.interface";
+import { assignmentService } from "src/services/assignment-service";
 
 interface AssignmentStoreState {
   metadata: {
@@ -20,7 +20,7 @@ interface AssignmentStoreState {
   myAssignmentMap: Map<number, Assignment>;
 }
 
-export const useAssignmentStore = defineStore('assignment', {
+export const useAssignmentStore = defineStore("assignment", {
   state: (): AssignmentStoreState => ({
     metadata: {
       initialized: false,
@@ -54,7 +54,7 @@ export const useAssignmentStore = defineStore('assignment', {
             acc.set(index, {
               ...data,
               id: index,
-              sequences: 'NotLoadedYet',
+              sequences: "NotLoadedYet",
               lastUpdate: new Date(data.lastUpdate),
               nbSequence: Math.random() * (20 - 3) + 3,
             });
@@ -77,7 +77,7 @@ export const useAssignmentStore = defineStore('assignment', {
         throw new Error(`The is no assignment for id='${assignmentId}'`);
       }
 
-      assignment.sequences = 'Loading';
+      assignment.sequences = "Loading";
 
       // TODO Handle errors
       const data = await assignmentService.getSequences(assignmentId);
@@ -93,9 +93,9 @@ export const useAssignmentStore = defineStore('assignment', {
               },
               state: pickRandomState(),
               interactions: [
-                { type: 'RESPONSE_SUBMISSION' },
-                { type: 'EVALUATION' },
-                { type: 'READ' },
+                { type: "RESPONSE_SUBMISSION" },
+                { type: "EVALUATION" },
+                { type: "READ" },
               ],
               activeInteractionIndex: sequenceData.activeInteractionIndex,
               resultsArePublished: sequenceData.resultsArePublished,

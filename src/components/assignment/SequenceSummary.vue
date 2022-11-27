@@ -17,8 +17,8 @@
 </template>
 
 <script setup lang="ts">
-import { computed, PropType } from 'vue';
-import { Sequence, sequenceIcons } from 'src/models/sequence.interface';
+import { computed, PropType } from "vue";
+import { Sequence, sequenceIcons } from "src/models/sequence.interface";
 
 const props = defineProps({
   sequence: {

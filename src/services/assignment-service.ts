@@ -1,9 +1,9 @@
 import {
   ServerAssignmentData,
   ServerSequenceData,
-} from 'src/models/assignment.interface';
-import { delay } from 'src/util/dev';
-import { faker } from '@faker-js/faker/locale/fr';
+} from "src/models/assignment.interface";
+import { delay } from "src/util/dev";
+import { faker } from "@faker-js/faker/locale/fr";
 
 async function getMyAssignments(): Promise<ServerAssignmentData[]> {
   await delay(2000); // simulate latency
@@ -12,7 +12,7 @@ async function getMyAssignments(): Promise<ServerAssignmentData[]> {
   return [...Array(nbResults).keys()].map(() => {
     return {
       lastUpdate: faker.date
-        .between('2020-01-01T00:00:00.000Z', '2030-01-01T00:00:00.000Z')
+        .between("2020-01-01T00:00:00.000Z", "2030-01-01T00:00:00.000Z")
         .toString(),
       title: faker.lorem.words(),
     };

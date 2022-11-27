@@ -1,10 +1,10 @@
-import { Sequence } from 'src/models/sequence.interface';
+import { Sequence } from "src/models/sequence.interface";
 
 export interface Assignment {
   id: number;
   title: string;
   lastUpdate: Date;
-  sequences: Sequence[] | 'NotLoadedYet' | 'Loading';
+  sequences: Sequence[] | "NotLoadedYet" | "Loading";
   nbSequence: number;
 }
 

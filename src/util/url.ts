@@ -1,5 +1,5 @@
 export function parseIntFromUrlParam(param: string | string[]): number {
-  if (typeof param !== 'string') {
+  if (typeof param !== "string") {
     throw Error(`Expects a string ; got "${param}"`);
   }
 

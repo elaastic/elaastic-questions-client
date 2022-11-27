@@ -27,10 +27,10 @@
 </template>
 
 <script setup lang="ts">
-import { useAssignmentStore } from 'stores/assignment-store';
-import { formatDate } from 'src/util/date';
-import { computed, watchEffect } from 'vue';
-import { useQuasar } from 'quasar';
+import { useAssignmentStore } from "stores/assignment-store";
+import { formatDate } from "src/util/date";
+import { computed, watchEffect } from "vue";
+import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 const assignmentStore = useAssignmentStore();
@@ -39,7 +39,7 @@ const loading = computed(() => assignmentStore.metadata.loading);
 
 watchEffect(() => {
   if (loading.value) {
-    $q.loading.show({ message: 'Loading assignments...' });
+    $q.loading.show({ message: "Loading assignments..." });
   } else {
     $q.loading.hide();
   }

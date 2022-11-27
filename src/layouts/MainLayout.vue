@@ -45,13 +45,13 @@
 </template>
 
 <script setup lang="ts">
-import { useRoute } from 'vue-router';
-import { computed } from 'vue';
+import { useRoute } from "vue-router";
+import { computed } from "vue";
 
 const route = useRoute();
 
 const title = computed(() => {
-  return route.meta.title ?? 'elaastic';
+  return route.meta.title ?? "elaastic";
 });
 
 const isHomePage = computed(() => {

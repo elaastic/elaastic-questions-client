@@ -13,14 +13,14 @@
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect } from 'vue';
-import { useAssignmentStore } from 'stores/assignment-store';
-import { useRoute } from 'vue-router';
-import { parseIntFromUrlParam } from 'src/util/url';
-import { Assignment } from 'src/models/assignment.interface';
-import PageTitle from 'components/commons/PageTitle.vue';
-import AssignmentSummary from 'components/assignment/AssignmentSummary.vue';
-import { useQuasar } from 'quasar';
+import { computed, watchEffect } from "vue";
+import { useAssignmentStore } from "stores/assignment-store";
+import { useRoute } from "vue-router";
+import { parseIntFromUrlParam } from "src/util/url";
+import { Assignment } from "src/models/assignment.interface";
+import PageTitle from "components/commons/PageTitle.vue";
+import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
+import { useQuasar } from "quasar";
 
 const $q = useQuasar();
 const assignmentStore = useAssignmentStore();
@@ -45,7 +45,7 @@ const loading = computed(() => assignmentStore.metadata.loading);
 
 watchEffect(() => {
   if (loading.value) {
-    $q.loading.show({ message: 'Loading assignments...' });
+    $q.loading.show({ message: "Loading assignments..." });
   } else {
     $q.loading.hide();
   }

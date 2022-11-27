@@ -15,12 +15,12 @@
 </template>
 
 <script setup lang="ts">
-import SequenceSummary from 'components/assignment/SequenceSummary.vue';
-import { computed, PropType } from 'vue';
-import { Assignment } from 'src/models/assignment.interface';
-import { useAssignmentStore } from 'stores/assignment-store';
-import { Sequence } from 'src/models/sequence.interface';
-import { useRouter } from 'vue-router';
+import SequenceSummary from "components/assignment/SequenceSummary.vue";
+import { computed, PropType } from "vue";
+import { Assignment } from "src/models/assignment.interface";
+import { useAssignmentStore } from "stores/assignment-store";
+import { Sequence } from "src/models/sequence.interface";
+import { useRouter } from "vue-router";
 
 const props = defineProps({
   assignment: {
@@ -34,11 +34,11 @@ const router = useRouter();
 
 const sequences = computed((): Sequence[] | undefined => {
   switch (props.assignment.sequences) {
-    case 'NotLoadedYet':
+    case "NotLoadedYet":
       assignmentStore.loadSequences(props.assignment.id);
       return undefined;
 
-    case 'Loading':
+    case "Loading":
       return undefined;
 
     default:
@@ -48,7 +48,7 @@ const sequences = computed((): Sequence[] | undefined => {
 
 function openSequence(sequenceIndex: number) {
   router.push({
-    name: 'play-sequence',
+    name: "play-sequence",
     params: {
       assignmentId: props.assignment.id,
       sequenceIndex: sequenceIndex + 1,

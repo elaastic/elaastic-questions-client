@@ -13,7 +13,7 @@ defineProps({
   name: String,
   color: {
     type: String,
-    default: 'white',
+    default: "white",
   },
 });
 </script>
