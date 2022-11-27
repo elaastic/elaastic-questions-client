@@ -1,7 +1,5 @@
 <template>
-  <template v-if="assignment">
-    <base-todo name="Play page" />
-  </template>
+  <base-todo v-if="assignment" name="Play page" />
 </template>
 
 <script setup lang="ts">
