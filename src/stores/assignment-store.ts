@@ -77,6 +77,9 @@ export const useAssignmentStore = defineStore('assignment', {
         throw new Error(`The is no assignment for id='${assignmentId}'`);
       }
 
+      assignment.sequences = 'Loading';
+
+      // TODO Handle errors
       const data = await assignmentService.getSequences(assignmentId);
 
       assignment.sequences = data.reduce(
