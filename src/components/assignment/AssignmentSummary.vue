@@ -1,4 +1,10 @@
 <template>
+  <page-title icon="menu_book" :title="assignment.title" />
+
+  <q-banner class="bg-negative" v-if="assignment.nbSequence === 0">
+    There is no sequence in this assignment.
+  </q-banner>
+
   <div class="q-ma-sm sequences" v-if="sequences">
 
     <sequence-summary
@@ -14,6 +20,7 @@
 <script setup lang="ts">
 import SequenceSummary from "components/assignment/SequenceSummary.vue";
 import { computed, PropType } from "vue";
+import PageTitle from "components/commons/PageTitle.vue";
 import { Assignment } from "src/models/assignment.interface";
 import { useAssignmentStore } from "stores/assignment-store";
 import { Sequence } from "src/models/sequence.interface";

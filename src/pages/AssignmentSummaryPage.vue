@@ -1,12 +1,6 @@
 <template>
   <q-page v-if="assignment">
-    <page-title icon="menu_book" :title="assignment.title" />
-
-    <q-banner class="bg-negative" v-if="assignment.nbSequence === 0">
-      There is no sequence in this assignment.
-    </q-banner>
-
-    <assignment-summary v-else :assignment="assignment" />
+    <assignment-summary :assignment="assignment" />
   </q-page>
 </template>
 
@@ -16,7 +10,6 @@ import { useAssignmentStore } from "stores/assignment-store";
 import { useRoute } from "vue-router";
 import { parseIntFromUrlParam } from "src/util/url";
 import { Assignment } from "src/models/assignment.interface";
-import PageTitle from "components/commons/PageTitle.vue";
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
 import { useQuasar } from "quasar";
 

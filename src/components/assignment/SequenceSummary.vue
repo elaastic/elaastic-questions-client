@@ -18,7 +18,11 @@
 
 <script setup lang="ts">
 import { computed, PropType } from "vue";
-import { Sequence, sequenceIcons } from "src/models/sequence.interface";
+import {
+  DefaultSequence,
+  Sequence,
+  sequenceIcons,
+} from "src/models/sequence.interface";
 
 const props = defineProps({
   sequence: {
@@ -29,7 +33,7 @@ const props = defineProps({
 });
 
 const stateIcons = computed((): string[] => {
-  return sequenceIcons(props.sequence);
+  return sequenceIcons(new DefaultSequence(props.sequence));
 });
 </script>
 
