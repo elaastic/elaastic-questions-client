@@ -31,6 +31,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/SequencePlayPage.vue"),
         props: (route) => ({
           assignmentId: parseIntFromUrlParam(route.params.assignmentId),
+          sequenceIndex: parseIntFromUrlParam(route.params.sequenceIndex),
         }),
         meta: {
           title: "Play sequence",

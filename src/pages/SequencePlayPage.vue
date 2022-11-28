@@ -1,11 +1,21 @@
 <template>
-  <base-todo v-if="assignment" name="Play page" />
+  <div v-if="assignment">
+    <ul>
+      <li>Assignment: {{ assignment.title }}</li>
+      <sequence-player
+        :assignment="assignment"
+        :sequence-index="sequenceIndex"
+      />
+    </ul>
+  </div>
 </template>
 
 <script setup lang="ts">
-import { computed } from "vue";
+import {computed, watchEffect} from "vue";
 import { useAssignmentStore } from "stores/assignment-store";
-import BaseTodo from "components/dev/BaseTodo.vue";
+import SequencePlayer from "components/assignment/SequencePlayer.vue";
+import {useQuasar} from "quasar";
+const quasar = useQuasar()
 const assignmentStore = useAssignmentStore();
 
 const props = defineProps({
@@ -13,9 +23,31 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+  sequenceIndex: {
+    type: Number,
+    required: true,
+  },
 });
 
 const assignment = computed(() => assignmentStore.get(props.assignmentId));
+
+const loading = computed(() => {
+  if (assignmentStore.metadata.loading) {
+    return { message: "Loading assignments..." };
+  } else if (assignment.value?.sequences === "Loading") {
+    return { message: "Loading sequences..." };
+  } else {
+    return false;
+  }
+});
+
+watchEffect(() => {
+  if (loading.value) {
+    quasar.loading.show(loading.value);
+  } else {
+    quasar.loading.hide();
+  }
+});
 </script>
 
 <style scoped></style>

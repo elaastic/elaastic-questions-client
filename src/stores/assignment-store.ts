@@ -35,7 +35,7 @@ export const useAssignmentStore = defineStore("assignment", {
       return Array.from(state.myAssignmentMap.values());
     },
     get: (state) => {
-      return (assignmentId: number) => {
+      return (assignmentId: number): Assignment | undefined => {
         if (!state.metadata.initialized) {
           return undefined;
         }
@@ -85,6 +85,7 @@ export const useAssignmentStore = defineStore("assignment", {
         this.metadata.initialized = true;
       }
     },
+
     async loadSequences(assignmentId: number) {
       const assignment = this.myAssignmentMap.get(assignmentId);
 
