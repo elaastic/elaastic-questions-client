@@ -1,13 +1,8 @@
 <template>
-  <div v-if="assignment">
-    <ul>
-      <li>Assignment: {{ assignment.title }}</li>
-      <sequence-player
-        :assignment="assignment"
-        :sequence-index="sequenceIndex"
-      />
-    </ul>
-  </div>
+  <sequence-player
+    v-if="assignment"
+    :assignment="assignment"
+    :sequence-index="sequenceIndex - 1" />
 </template>
 
 <script setup lang="ts">

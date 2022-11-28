@@ -1,14 +1,18 @@
 <template>
   <div v-if="sequence">
-    {{ sequence.statement.title }}
+    <base-todo name="PhaseStepper" />
+
+    <abstract-phase v-if="currentPhase" :phase="currentPhase" />
   </div>
 </template>
 
 <script setup lang="ts">
 import {computed, PropType} from "vue";
 import {Assignment} from "src/models/assignment.interface";
-import {Sequence} from "src/models/sequence.interface";
+import {DefaultSequence, Sequence} from "src/models/sequence.interface";
 import {useAssignmentStore} from "stores/assignment-store";
+import BaseTodo from "components/dev/BaseTodo.vue";
+import AbstractPhase from "components/assignment/phase/AbstractPhase.vue";
 
 const props = defineProps({
   assignment: {
@@ -40,6 +44,13 @@ const sequence = computed<Sequence | undefined>(() => {
 
       return props.assignment.sequences[props.sequenceIndex]
   }
+})
+
+const currentPhase = computed(() => {
+  if(sequence.value) {
+    return new DefaultSequence(sequence.value).getActivePhase() // TODO use service instead of class
+  }
+  return null
 })
 
 </script>

@@ -1,10 +1,10 @@
-import { Interaction } from "src/models/interaction";
+import { Phase } from "src/models/phase";
 
 export interface Sequence {
   id: number;
   statement: Statement;
   state: SequenceState;
-  interactions: Interaction[];
+  interactions: Phase[];
   activeInteractionIndex?: number;
   resultsArePublished: boolean;
 }
@@ -14,7 +14,7 @@ export class DefaultSequence implements Sequence {
   statement: Statement;
   activeInteractionIndex?: number;
   state: SequenceState;
-  interactions: Interaction[];
+  interactions: Phase[];
   resultsArePublished: boolean;
 
   constructor(sequence: Sequence) {
@@ -26,7 +26,7 @@ export class DefaultSequence implements Sequence {
     this.resultsArePublished = sequence.resultsArePublished;
   }
 
-  getActiveInteraction(): Interaction | null {
+  getActivePhase(): Phase | null {
     return this.activeInteractionIndex !== undefined
       ? this.interactions[this.activeInteractionIndex]
       : null;
@@ -69,7 +69,7 @@ export function sequenceIcons(sequence: DefaultSequence): SequenceIcon[] {
       return ["not_started"];
 
     case "IN_PROGRESS":
-      switch (sequence.getActiveInteraction()?.type) {
+      switch (sequence.getActivePhase()?.type) {
         case "RESPONSE_SUBMISSION":
           return ["edit"];
 
