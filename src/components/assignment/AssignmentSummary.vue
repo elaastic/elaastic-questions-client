@@ -6,7 +6,6 @@
   </q-banner>
 
   <div class="q-ma-sm sequences" v-if="sequences">
-
     <sequence-summary
       v-for="(sequence, index) in sequences"
       :key="sequence.id"

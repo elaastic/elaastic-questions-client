@@ -19,7 +19,7 @@ const routes: RouteRecordRaw[] = [
         name: "assignment-summary",
         component: () => import("pages/AssignmentSummaryPage.vue"),
         props: (route) => ({
-          assignmentId: parseIntFromUrlParam(route.params.assignmentId)
+          assignmentId: parseIntFromUrlParam(route.params.assignmentId),
         }),
         meta: {
           title: "Assignment Summary",
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
         name: "play-sequence",
         component: () => import("pages/SequencePlayPage.vue"),
         props: (route) => ({
-          assignmentId: parseIntFromUrlParam(route.params.assignmentId)
+          assignmentId: parseIntFromUrlParam(route.params.assignmentId),
         }),
         meta: {
           title: "Play sequence",
@@ -43,6 +43,7 @@ const routes: RouteRecordRaw[] = [
   // but you can also remove it
   {
     path: "/:catchAll(.*)*",
+    name: "404",
     component: () => import("pages/ErrorNotFound.vue"),
   },
 ];

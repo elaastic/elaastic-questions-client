@@ -9,6 +9,7 @@ import {
   pickRandomState,
 } from "src/models/sequence.interface";
 import { assignmentService } from "src/services/assignment-service";
+import { NotFoundError } from "src/models/error";
 
 interface AssignmentStoreState {
   metadata: {
@@ -34,7 +35,21 @@ export const useAssignmentStore = defineStore("assignment", {
       return Array.from(state.myAssignmentMap.values());
     },
     get: (state) => {
-      return (assignmentId: number) => state.myAssignmentMap.get(assignmentId);
+      return (assignmentId: number) => {
+        if (!state.metadata.initialized) {
+          return undefined;
+        }
+
+        const assignment = state.myAssignmentMap.get(assignmentId);
+
+        if (!assignment) {
+          throw new NotFoundError(
+            `There is no assignment with id=${assignmentId}`
+          );
+        }
+
+        return assignment;
+      };
     },
   },
   actions: {
@@ -74,7 +89,9 @@ export const useAssignmentStore = defineStore("assignment", {
       const assignment = this.myAssignmentMap.get(assignmentId);
 
       if (!assignment) {
-        throw new Error(`The is no assignment for id='${assignmentId}'`);
+        throw new NotFoundError(
+          `The is no assignment for id='${assignmentId}'`
+        );
       }
 
       assignment.sequences = "Loading";
