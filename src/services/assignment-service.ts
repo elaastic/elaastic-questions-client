@@ -31,7 +31,7 @@ async function getSequences(
       activeInteractionIndex: Math.trunc(Math.random() * 3),
       content: faker.lorem.text(),
       id: Math.trunc(Math.random() * 100000),
-      resultsArePublished: false,
+      resultsArePublished: Math.random() > 0.5,
       title: faker.lorem.words(),
     };
   });
