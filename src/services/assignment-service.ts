@@ -28,7 +28,7 @@ async function getSequences(
 
   return [...Array(nbResults).keys()].map(() => {
     return {
-      activeInteractionIndex: 0,
+      activeInteractionIndex: Math.trunc(Math.random() * 3),
       content: faker.lorem.text(),
       id: Math.trunc(Math.random() * 100000),
       resultsArePublished: false,
