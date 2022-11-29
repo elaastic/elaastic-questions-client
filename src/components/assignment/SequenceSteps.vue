@@ -1,6 +1,6 @@
 <template>
   <div class="ui unstackable mini steps">
-    <div class="step" :class="{disabled: disabled(0), active: active(0)}">
+    <div class="step" :class="{ disabled: disabled(0), active: active(0) }">
       <div class="content">
         <div class="title">Phase 1</div>
         <div class="description">Answer</div>
@@ -37,7 +37,8 @@ if (props.phases.length !== 3) {
 }
 
 const disabled = computed(
-  () => (num: number) => ["DISABLED", "CLOSED"].includes(props.phases[num].state)
+  () => (num: number) =>
+    ["DISABLED", "CLOSED"].includes(props.phases[num].state)
 );
 const active = computed(
   () => (num: number) => ["ACTIVE"].includes(props.phases[num].state)
@@ -46,6 +47,10 @@ const active = computed(
 
 <style scoped>
 .ui.steps {
-  width: 100%; margin: 0; border-left: 0; border-right: 0;
+  width: 100%;
+  margin: 0;
+  border-left: 0;
+  border-right: 0;
+  border-radius: 0;
 }
 </style>
