@@ -1,6 +1,6 @@
 <template>
   <div v-if="phase.type === 'RESPONSE_SUBMISSION'">
-    <base-todo name="Phase Response Submission" />
+    <response-phase />
   </div>
   <div v-else-if="phase.type === 'EVALUATION'">
     <base-todo name="Evaluation" />
@@ -14,8 +14,9 @@
 import { PropType } from "vue";
 import { Phase } from "src/models/phase";
 import BaseTodo from "components/dev/BaseTodo.vue";
+import ResponsePhase from "components/assignment/phase/ResponsePhase.vue";
 
-const props = defineProps({
+defineProps({
   phase: {
     type: Object as PropType<Phase>,
     required: true,
