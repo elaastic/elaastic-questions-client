@@ -1,6 +1,6 @@
 <template>
   <div v-if="sequence">
-    <base-todo name="PhaseStepper" />
+    <sequence-steps />
 
     <abstract-phase v-if="currentPhase" :phase="currentPhase" />
   </div>
@@ -11,8 +11,9 @@ import {computed, PropType} from "vue";
 import {Assignment} from "src/models/assignment.interface";
 import {DefaultSequence, Sequence} from "src/models/sequence.interface";
 import {useAssignmentStore} from "stores/assignment-store";
-import BaseTodo from "components/dev/BaseTodo.vue";
 import AbstractPhase from "components/assignment/phase/AbstractPhase.vue";
+import SequenceSteps from "components/assignment/SequenceSteps.vue";
+import "semantic-ui-step/step.css"
 
 const props = defineProps({
   assignment: {
