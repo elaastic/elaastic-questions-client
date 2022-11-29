@@ -1,7 +1,9 @@
 <template>
   <div v-if="sequence">
     <sequence-steps :phases="sequence.phases" />
+    <sequence-statement :statement="sequence.statement" />
 
+<!--    TODO rename interaction-->
     <abstract-phase v-if="currentPhase" :phase="currentPhase" />
   </div>
 </template>
@@ -14,6 +16,7 @@ import {useAssignmentStore} from "stores/assignment-store";
 import AbstractPhase from "components/assignment/phase/AbstractPhase.vue";
 import SequenceSteps from "components/assignment/SequenceSteps.vue";
 import "semantic-ui-step/step.css"
+import SequenceStatement from "components/assignment/SequenceStatement.vue";
 
 const props = defineProps({
   assignment: {
