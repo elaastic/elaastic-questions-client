@@ -1,6 +1,6 @@
 <template>
-  <div class="q-pa-xs row items-start q-gutter-xs">
-    <q-card class="my-card" flat bordered>
+  <div class="q-pa-xs row q-gutter-xs">
+    <q-card class="statement-card" flat bordered>
       <q-card-section>
         <div class="text-overline text-orange-9">Question</div>
         <div class="text-h5 q-mt-sm q-mb-xs">{{ statement.title }}</div>
@@ -14,7 +14,7 @@
 import { PropType } from "vue";
 import { Statement } from "src/models/sequence.interface";
 
-const props = defineProps({
+defineProps({
   statement: {
     type: Object as PropType<Statement>,
     required: true,
@@ -22,4 +22,8 @@ const props = defineProps({
 });
 </script>
 
-<style scoped></style>
+<style scoped>
+.statement-card {
+  width: 100%;
+}
+</style>
