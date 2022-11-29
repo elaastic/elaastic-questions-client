@@ -5,7 +5,7 @@
         <div class="text-overline text-orange-9">Response</div>
         <base-todo name="Choose answer" />
         <submit-argument v-model="argument" />
-        <base-todo name="Provide confidence degree" />
+        <submit-confidence v-model="confidenceDegree" />
       </q-card-section>
     </q-card>
   </div>
@@ -15,8 +15,11 @@
 import BaseTodo from "components/dev/BaseTodo.vue";
 import SubmitArgument from "components/assignment/interaction/submit-argument.vue";
 import { ref } from "vue";
+import SubmitConfidence from "components/assignment/interaction/submit-confidence.vue";
 
 const argument = ref("");
+const confidenceDegree = ref(undefined)
+
 </script>
 
 <style scoped></style>
