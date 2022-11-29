@@ -4,7 +4,7 @@ export interface Sequence {
   id: number;
   statement: Statement;
   state: SequenceState;
-  interactions: Phase[];
+  phases: Phase[];
   activeInteractionIndex?: number;
   resultsArePublished: boolean;
 }
@@ -14,21 +14,21 @@ export class DefaultSequence implements Sequence {
   statement: Statement;
   activeInteractionIndex?: number;
   state: SequenceState;
-  interactions: Phase[];
+  phases: Phase[];
   resultsArePublished: boolean;
 
   constructor(sequence: Sequence) {
     this.id = sequence.id;
     this.statement = sequence.statement;
     this.state = sequence.state;
-    this.interactions = sequence.interactions;
+    this.phases = sequence.phases;
     this.activeInteractionIndex = sequence.activeInteractionIndex;
     this.resultsArePublished = sequence.resultsArePublished;
   }
 
   getActivePhase(): Phase | null {
     return this.activeInteractionIndex !== undefined
-      ? this.interactions[this.activeInteractionIndex]
+      ? this.phases[this.activeInteractionIndex]
       : null;
   }
 }

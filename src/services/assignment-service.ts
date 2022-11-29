@@ -39,5 +39,5 @@ async function getSequences(
 
 export const assignmentService = {
   getMyAssignments,
-  getSequences: getSequences,
+  getSequences,
 };

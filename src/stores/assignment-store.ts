@@ -110,10 +110,10 @@ export const useAssignmentStore = defineStore("assignment", {
                 content: sequenceData.content,
               },
               state: pickRandomState(),
-              interactions: [
-                { type: "RESPONSE_SUBMISSION" },
-                { type: "EVALUATION" },
-                { type: "READ" },
+              phases: [
+                { type: "RESPONSE_SUBMISSION", state: "DONE"},
+                { type: "EVALUATION", state: "ACTIVE"},
+                { type: "READ", state: "CLOSED"},
               ],
               activeInteractionIndex: sequenceData.activeInteractionIndex,
               resultsArePublished: sequenceData.resultsArePublished,

@@ -1,6 +1,6 @@
 <template>
   <div v-if="sequence">
-    <sequence-steps />
+    <sequence-steps :phases="sequence.phases" />
 
     <abstract-phase v-if="currentPhase" :phase="currentPhase" />
   </div>
