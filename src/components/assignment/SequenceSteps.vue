@@ -46,6 +46,6 @@ const active = computed(
 
 <style scoped>
 .ui.steps {
-  width: 100%; margin: 0
+  width: 100%; margin: 0; border-left: 0; border-right: 0;
 }
 </style>
