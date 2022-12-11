@@ -31,22 +31,22 @@ const props = defineProps({
 
 const assignmentStore = useAssignmentStore()
 
-if(props.assignment.sequences === "NotLoadedYet") {
+if(props.assignment.sequences.status === "NotLoadedYet") {
   assignmentStore.loadSequences(props.assignment.id)
 }
 
 const sequence = computed<Sequence | undefined>(() => {
-  switch (props.assignment.sequences) {
+  switch (props.assignment.sequences.status) {
     case "NotLoadedYet":
     case "Loading":
       return undefined
 
     default:
-      if(!props.assignment.sequences?.[props.sequenceIndex] ) {
+      if(!props.assignment.sequences.value[props.sequenceIndex] ) {
         throw new Error("Incorrect sequence index") // TODO
       }
 
-      return props.assignment.sequences[props.sequenceIndex]
+      return props.assignment.sequences.value[props.sequenceIndex]
   }
 })
 

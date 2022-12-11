@@ -35,18 +35,18 @@ const props = defineProps({
 const assignmentStore = useAssignmentStore();
 const router = useRouter();
 
-if (props.assignment.sequences === "NotLoadedYet") {
+if (props.assignment.sequences.status === "NotLoadedYet") {
   assignmentStore.loadSequences(props.assignment.id);
 }
 
 const sequences = computed((): Sequence[] | undefined => {
-  switch (props.assignment.sequences) {
+  switch (props.assignment.sequences.status) {
     case "NotLoadedYet":
     case "Loading":
       return undefined;
 
     default:
-      return props.assignment.sequences;
+      return props.assignment.sequences.value;
   }
 });
 

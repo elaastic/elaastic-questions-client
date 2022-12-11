@@ -25,7 +25,7 @@ const assignment = computed(() => assignmentStore.get(props.assignmentId));
 const loading = computed(() => {
   if (assignmentStore.metadata.loading) {
     return { message: "Loading assignments..." };
-  } else if (assignment.value?.sequences === "Loading") {
+  } else if (assignment.value?.sequences?.status === "Loading") {
     return { message: "Loading sequences..." };
   } else {
     return false;

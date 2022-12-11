@@ -69,7 +69,7 @@ export const useAssignmentStore = defineStore("assignment", {
             acc.set(index, {
               ...data,
               id: index,
-              sequences: "NotLoadedYet",
+              sequences: { status: "NotLoadedYet" },
               lastUpdate: new Date(data.lastUpdate),
               nbSequence: Math.random() * (20 - 3) + 3,
             });
@@ -95,35 +95,38 @@ export const useAssignmentStore = defineStore("assignment", {
         );
       }
 
-      assignment.sequences = "Loading";
+      assignment.sequences = { status: "Loading" };
 
       // TODO Handle errors
       const data = await assignmentService.getSequences(assignmentId);
 
-      assignment.sequences = data.reduce(
-        (acc: DefaultSequence[], sequenceData: ServerSequenceData) => {
-          acc.push(
-            new DefaultSequence({
-              id: sequenceData.id,
-              statement: {
-                title: sequenceData.title,
-                content: sequenceData.content,
-              },
-              state: pickRandomState(),
-              phases: [
-                { type: "RESPONSE_SUBMISSION", state: "DONE"},
-                { type: "EVALUATION", state: "ACTIVE"},
-                { type: "READ", state: "CLOSED"},
-              ],
-              activeInteractionIndex: sequenceData.activeInteractionIndex,
-              resultsArePublished: sequenceData.resultsArePublished,
-            })
-          );
+      assignment.sequences = {
+        status: "Loaded",
+        value: data.reduce(
+          (acc: DefaultSequence[], sequenceData: ServerSequenceData) => {
+            acc.push(
+              new DefaultSequence({
+                id: sequenceData.id,
+                statement: {
+                  title: sequenceData.title,
+                  content: sequenceData.content,
+                },
+                state: pickRandomState(),
+                phases: [
+                  { type: "RESPONSE_SUBMISSION", state: "DONE" },
+                  { type: "EVALUATION", state: "ACTIVE" },
+                  { type: "READ", state: "CLOSED" },
+                ],
+                activeInteractionIndex: sequenceData.activeInteractionIndex,
+                resultsArePublished: sequenceData.resultsArePublished,
+              })
+            );
 
-          return acc;
-        },
-        []
-      );
+            return acc;
+          },
+          []
+        ),
+      };
     },
   },
 });

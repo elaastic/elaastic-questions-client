@@ -1,10 +1,11 @@
 import { Sequence } from "src/models/sequence.interface";
+import { LazyData } from "src/util/data.interface";
 
 export interface Assignment {
   id: number;
   title: string;
   lastUpdate: Date;
-  sequences: Sequence[] | "NotLoadedYet" | "Loading";
+  sequences: LazyData<Sequence[]>
   nbSequence: number;
 }
 
