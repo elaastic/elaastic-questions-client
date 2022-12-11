@@ -10,7 +10,7 @@ import { useAssignmentStore } from "stores/assignment-store";
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
 import { useQuasar } from "quasar";
 
-const $q = useQuasar();
+const quasar = useQuasar();
 const assignmentStore = useAssignmentStore();
 
 const props = defineProps({
@@ -34,9 +34,9 @@ const loading = computed(() => {
 
 watchEffect(() => {
   if (loading.value) {
-    $q.loading.show(loading.value);
+    quasar.loading.show(loading.value);
   } else {
-    $q.loading.hide();
+    quasar.loading.hide();
   }
 });
 </script>
