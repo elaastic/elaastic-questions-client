@@ -32,16 +32,16 @@ import { formatDate } from "src/util/date";
 import { computed, watchEffect } from "vue";
 import { useQuasar } from "quasar";
 
-const $q = useQuasar();
+const quasar = useQuasar();
 const assignmentStore = useAssignmentStore();
 const myAssignmentList = computed(() => assignmentStore.getAll);
 const loading = computed(() => assignmentStore.metadata.loading);
 
 watchEffect(() => {
   if (loading.value) {
-    $q.loading.show({ message: "Loading assignments..." });
+    quasar.loading.show({ message: "Loading assignments..." });
   } else {
-    $q.loading.hide();
+    quasar.loading.hide();
   }
 });
 </script>
