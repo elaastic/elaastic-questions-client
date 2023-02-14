@@ -1,17 +1,23 @@
 import { Sequence } from "src/models/sequence.interface";
-import { LazyData } from "src/util/data.interface";
 
-export interface Assignment {
+export interface AssignmentSummary {
   id: number;
   title: string;
   lastUpdate: Date;
-  sequences: LazyData<Sequence[]>
   nbSequence: number;
 }
 
-export interface ServerAssignmentData {
+export interface AssignmentContent {
+  sequences: Sequence[]
+}
+
+export interface Assignment extends AssignmentSummary, AssignmentContent {}
+
+export interface ServerAssignmentSummary {
+  id: number;
   title: string;
   lastUpdate: string;
+  nbSequence: number;
 }
 
 export interface ServerSequenceData {

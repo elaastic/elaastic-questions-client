@@ -1,14 +1,5 @@
 import { defineStore } from "pinia";
-import {
-  Assignment,
-  ServerAssignmentData,
-  ServerSequenceData,
-} from "src/models/assignment.interface";
-import {
-  DefaultSequence,
-  pickRandomState,
-} from "src/models/sequence.interface";
-import { assignmentService } from "src/services/assignment-service";
+import { Assignment } from "src/models/assignment.interface";
 import { NotFoundError } from "src/models/error";
 
 interface AssignmentStoreState {
@@ -53,39 +44,6 @@ export const useAssignmentStore = defineStore("assignment", {
     },
   },
   actions: {
-    async loadMyAssignments() {
-      this.metadata.loading = true;
-      this.metadata.error = null;
-
-      try {
-        const data = await assignmentService.getMyAssignments();
-
-        this.myAssignmentMap = data.reduce(
-          (
-            acc: Map<number, Assignment>,
-            data: ServerAssignmentData,
-            index: number
-          ) => {
-            acc.set(index, {
-              ...data,
-              id: index,
-              sequences: { status: "NotLoadedYet" },
-              lastUpdate: new Date(data.lastUpdate),
-              nbSequence: Math.random() * (20 - 3) + 3,
-            });
-            return acc;
-          },
-          new Map()
-        );
-      } catch (e: unknown) {
-        // TODO Handle error
-        this.metadata.error = Error(e?.toString());
-      } finally {
-        this.metadata.loading = false;
-        this.metadata.initialized = true;
-      }
-    },
-
     async loadSequences(assignmentId: number) {
       const assignment = this.myAssignmentMap.get(assignmentId);
 
@@ -95,38 +53,36 @@ export const useAssignmentStore = defineStore("assignment", {
         );
       }
 
-      assignment.sequences = { status: "Loading" };
-
       // TODO Handle errors
-      const data = await assignmentService.getSequences(assignmentId);
+      // const data = await assignmentService.getSequences(assignmentId);
 
-      assignment.sequences = {
-        status: "Loaded",
-        value: data.reduce(
-          (acc: DefaultSequence[], sequenceData: ServerSequenceData) => {
-            acc.push(
-              new DefaultSequence({
-                id: sequenceData.id,
-                statement: {
-                  title: sequenceData.title,
-                  content: sequenceData.content,
-                },
-                state: pickRandomState(),
-                phases: [
-                  { type: "RESPONSE_SUBMISSION", state: "DONE" },
-                  { type: "EVALUATION", state: "ACTIVE" },
-                  { type: "READ", state: "CLOSED" },
-                ],
-                activeInteractionIndex: sequenceData.activeInteractionIndex,
-                resultsArePublished: sequenceData.resultsArePublished,
-              })
-            );
-
-            return acc;
-          },
-          []
-        ),
-      };
+      // assignment.sequences = {
+      //   status: "Loaded",
+      //   value: data.reduce(
+      //     (acc: DefaultSequence[], sequenceData: ServerSequenceData) => {
+      //       acc.push(
+      //         new DefaultSequence({
+      //           id: sequenceData.id,
+      //           statement: {
+      //             title: sequenceData.title,
+      //             content: sequenceData.content,
+      //           },
+      //           state: pickRandomState(),
+      //           phases: [
+      //             { type: "RESPONSE_SUBMISSION", state: "DONE" },
+      //             { type: "EVALUATION", state: "ACTIVE" },
+      //             { type: "READ", state: "CLOSED" },
+      //           ],
+      //           activeInteractionIndex: sequenceData.activeInteractionIndex,
+      //           resultsArePublished: sequenceData.resultsArePublished,
+      //         })
+      //       );
+      //
+      //       return acc;
+      //     },
+      //     []
+      //   ),
+      // };
     },
   },
 });
