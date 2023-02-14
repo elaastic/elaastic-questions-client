@@ -9,6 +9,8 @@ import { computed, watchEffect } from "vue";
 import { useAssignmentStore } from "stores/assignment-store";
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
 import { useQuasar } from "quasar";
+import { useQuery } from "@tanstack/vue-query";
+import { fetchAssignmentContent, fetchAssignmentSummary } from "src/services/assignment-service";
 
 const quasar = useQuasar();
 const assignmentStore = useAssignmentStore();
@@ -18,6 +20,12 @@ const props = defineProps({
     type: Number,
     required: true,
   },
+});
+
+// TODO *** Mais en fait je l'ai déjà le summary (quand j'ai récupéré la liste...)
+const { status, data, error } = useQuery({
+  queryKey: ["assignment", props.assignmentId],
+  queryFn: () => (fetchAssignmentSummary(props.assignmentId)),
 });
 
 const assignment = computed(() => assignmentStore.get(props.assignmentId));

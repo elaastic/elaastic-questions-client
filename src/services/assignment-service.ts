@@ -12,6 +12,12 @@ export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   }));
 }
 
+export async function fetchAssignmentSummary(
+  assignmentId: number
+): Promise<AssignmentSummary> {
+  return mockAssignmentSummary(assignmentId);
+}
+
 export async function fetchAssignmentContent(
   assignmentId: number
 ): Promise<AssignmentContent> {
@@ -27,8 +33,8 @@ function mockMyAssignments(): AssignmentSummary[] {
   return [...Array(nbAssignments).keys()].map(mockAssignmentSummary);
 }
 
-const mockAssignmentSummary: () => AssignmentSummary = () => ({
-  id: faker.datatype.number(),
+const mockAssignmentSummary: (id: number) => AssignmentSummary = (id) => ({
+  id,
   lastUpdate: faker.date.between(
     "2020-01-01T00:00:00.000Z",
     "2030-01-01T00:00:00.000Z"
