@@ -7,7 +7,6 @@ import { delay } from "src/util/dev";
 import { faker } from "@faker-js/faker/locale/fr";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
-  await delay(2000); // simulate latency
 
   return mockMyAssignments().map((serverAssignmentSummary) => ({
     ...serverAssignmentSummary,

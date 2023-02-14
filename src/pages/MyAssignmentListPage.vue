@@ -1,6 +1,17 @@
 <template>
   <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
-    <template v-if="myAssignmentList">
+    <q-inner-loading
+      :showing="status === 'loading'"
+      label="Loading assignments..."
+      color="grey"
+      label-class="text-grey"
+    />
+
+    <error-panel v-if="status === 'error'">
+      {{ error }}
+    </error-panel>
+
+    <template v-if="status === 'success'">
       <div
         v-for="assignment in myAssignmentList"
         :key="`assignment-${assignment.id}`"
@@ -30,30 +41,16 @@
 
 <script setup lang="ts">
 import { formatDate } from "src/util/date";
-import { watchEffect } from "vue";
-import { useQuasar } from "quasar";
 import { useQuery } from "@tanstack/vue-query";
 import { fetchMyAssignments } from "src/services/assignment-service";
+import ErrorPanel from "components/commons/ErrorPanel.vue";
 
-const { isLoading, isError, isFetching, data, error } = useQuery({
+const { status, data, error } = useQuery({
   queryKey: ["my-assignments"],
   queryFn: fetchMyAssignments,
-  staleTime: 1000 * 60 * 5 // 5 min
+  staleTime: 1000 * 60 * 5, // 5 min
 });
 const myAssignmentList = data;
-
-// TODO Handle error
-// TODO Handle isFetching
-
-const quasar = useQuasar();
-
-watchEffect(() => {
-  if (isLoading.value) {
-    quasar.loading.show({ message: "Loading assignments..." });
-  } else {
-    quasar.loading.hide();
-  }
-});
 </script>
 
 <style scoped lang="scss">
