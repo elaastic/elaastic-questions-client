@@ -36,8 +36,9 @@ import { useQuery } from "@tanstack/vue-query";
 import { fetchMyAssignments } from "src/services/assignment-service";
 
 const { isLoading, isError, isFetching, data, error } = useQuery({
-  queryKey: [],
+  queryKey: ["my-assignments"],
   queryFn: fetchMyAssignments,
+  staleTime: 1000 * 60 * 5 // 5 min
 });
 const myAssignmentList = data;
 
