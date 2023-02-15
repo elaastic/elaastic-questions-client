@@ -1,19 +1,25 @@
 <template>
   <q-page v-if="assignment">
-    <assignment-summary :assignment="assignment" />
+    <q-inner-loading
+      :showing="status === 'loading'"
+      label="Loading assignment..."
+      color="grey"
+      label-class="text-grey"
+    />
+
+    <error-panel v-if="status === 'error'">
+      {{ error }}
+    </error-panel>
+
+    <assignment-summary v-if="status === 'success'" :assignment="assignment" />
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect } from "vue";
-import { useAssignmentStore } from "stores/assignment-store";
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
-import { useQuasar } from "quasar";
 import { useQuery } from "@tanstack/vue-query";
-import { fetchAssignmentContent, fetchAssignmentSummary } from "src/services/assignment-service";
-
-const quasar = useQuasar();
-const assignmentStore = useAssignmentStore();
+import { fetchAssignment } from "src/services/assignment-service";
+import ErrorPanel from "components/commons/ErrorPanel.vue";
 
 const props = defineProps({
   assignmentId: {
@@ -22,31 +28,14 @@ const props = defineProps({
   },
 });
 
-// TODO *** Mais en fait je l'ai déjà le summary (quand j'ai récupéré la liste...)
-const { status, data, error } = useQuery({
-  queryKey: ["assignment", props.assignmentId],
-  queryFn: () => (fetchAssignmentSummary(props.assignmentId)),
+// TODO We should handle the case where we already have the AssignmentSummary but the full Assignment yet
+const { status, error, data } = useQuery({
+  queryKey: ["Assignment", "detail", props.assignmentId],
+  queryFn: () => fetchAssignment(props.assignmentId),
+  staleTime: 1000 * 60 * 5, // 5 min
 });
 
-const assignment = computed(() => assignmentStore.get(props.assignmentId));
-
-const loading = computed(() => {
-  if (assignmentStore.metadata.loading) {
-    return { message: "Loading assignments..." };
-  } else if (assignment.value?.sequences?.status === "Loading") {
-    return { message: "Loading sequences..." };
-  } else {
-    return false;
-  }
-});
-
-watchEffect(() => {
-  if (loading.value) {
-    quasar.loading.show(loading.value);
-  } else {
-    quasar.loading.hide();
-  }
-});
+const assignment = data
 </script>
 
 <style scoped></style>

@@ -1,5 +1,5 @@
 import {
-  AssignmentContent,
+  Assignment,
   AssignmentSummary,
 } from "src/models/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
@@ -12,35 +12,37 @@ export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   }));
 }
 
-export async function fetchAssignmentSummary(
+export async function fetchAssignment(
   assignmentId: number
-): Promise<AssignmentSummary> {
-  return mockAssignmentSummary(assignmentId);
+): Promise<Assignment> {
+  return mockAssignment(assignmentId);
 }
 
-export async function fetchAssignmentContent(
-  assignmentId: number
-): Promise<AssignmentContent> {
-  const nbSequences = faker.datatype.number(8);
-
+function summarize(assignment: Assignment): AssignmentSummary {
   return {
-    sequences: [...Array(nbSequences).keys()].map(() => mockSequence()),
+    ...assignment,
+    nbSequence: assignment.sequences.length,
   };
 }
 
 function mockMyAssignments(): AssignmentSummary[] {
   const nbAssignments = faker.datatype.number({ min: 3, max: 10 });
-  return [...Array(nbAssignments).keys()].map(mockAssignmentSummary);
+  return [...Array(nbAssignments).keys()]
+    .map(faker.datatype.number)
+    .map(mockAssignment)
+    .map(summarize);
 }
 
-const mockAssignmentSummary: (id: number) => AssignmentSummary = (id) => ({
+const mockAssignment: (id: number) => Assignment = (id) => ({
   id,
+  title: faker.lorem.words(),
   lastUpdate: faker.date.between(
     "2020-01-01T00:00:00.000Z",
     "2030-01-01T00:00:00.000Z"
   ),
-  title: faker.lorem.words(),
-  nbSequence: faker.datatype.number(8),
+  sequences: [...Array(faker.datatype.number({ min: 3, max: 15 }))].map(
+    mockSequence
+  ),
 });
 
 const mockSequence: () => Sequence = () => ({

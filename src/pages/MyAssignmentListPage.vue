@@ -8,8 +8,8 @@
     />
 
     <error-panel v-if="status === 'error'">
-      {{ error }}
-    </error-panel>
+    {{ error }}
+  </error-panel>
 
     <template v-if="status === 'success'">
       <div
@@ -46,7 +46,7 @@ import { fetchMyAssignments } from "src/services/assignment-service";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
 
 const { status, data, error } = useQuery({
-  queryKey: ["my-assignments"],
+  queryKey: ["Assignment", "my-list"],
   queryFn: fetchMyAssignments,
   staleTime: 1000 * 60 * 5, // 5 min
 });

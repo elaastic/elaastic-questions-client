@@ -7,8 +7,9 @@ export interface AssignmentSummary {
   nbSequence: number;
 }
 
-export interface AssignmentContent {
+export interface Assignment {
+  id: number;
+  title: string;
+  lastUpdate: Date;
   sequences: Sequence[]
 }
-
-export interface Assignment extends AssignmentSummary, AssignmentContent {}
