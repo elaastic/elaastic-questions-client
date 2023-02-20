@@ -1,9 +1,11 @@
-import {
-  Assignment,
-  AssignmentSummary,
-} from "src/models/assignment.interface";
+import { Assignment, AssignmentSummary } from "src/models/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
-import { Sequence, Statement } from "src/models/sequence.interface";
+import {
+  pickRandomState,
+  Sequence,
+  Statement,
+} from "src/models/sequence.interface";
+import { Phase } from "src/models/phase";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   return mockMyAssignments().map((serverAssignmentSummary) => ({
@@ -49,12 +51,19 @@ const mockSequence: () => Sequence = () => ({
   id: faker.datatype.number(),
   statement: mockStatement(),
   activeInteractionIndex: Math.trunc(Math.random() * 3),
-  phases: [], // TODO ***
+  phases: mockPhases(),
   resultsArePublished: false,
-  state: "IN_PROGRESS", // TODO ***
+  state: pickRandomState(),
 });
 
 const mockStatement: () => Statement = () => ({
   title: faker.lorem.words(),
   content: faker.lorem.text(),
 });
+
+// TODO Randomize phase state
+const mockPhases: () => Phase[] = () => ([
+  {type: "RESPONSE_SUBMISSION", state: "CLOSED" },
+  {type: "EVALUATION", state: "CLOSED" },
+  {type: "READ", state: "CLOSED" },
+])
