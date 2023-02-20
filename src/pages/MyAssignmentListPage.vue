@@ -8,8 +8,8 @@
     />
 
     <error-panel v-if="status === 'error'">
-    {{ error }}
-  </error-panel>
+      {{ error }}
+    </error-panel>
 
     <template v-if="status === 'success'">
       <div
@@ -41,15 +41,11 @@
 
 <script setup lang="ts">
 import { formatDate } from "src/util/date";
-import { useQuery } from "@tanstack/vue-query";
-import { fetchMyAssignments } from "src/services/assignment-service";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
+import { useMyAssignments } from "src/services/assignment.query";
 
-const { status, data, error } = useQuery({
-  queryKey: ["Assignment", "my-list"],
-  queryFn: fetchMyAssignments,
-  staleTime: 1000 * 60 * 5, // 5 min
-});
+const { status, data, error } = useMyAssignments();
+
 const myAssignmentList = data;
 </script>
 

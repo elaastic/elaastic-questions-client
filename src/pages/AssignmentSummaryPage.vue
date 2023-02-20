@@ -17,9 +17,8 @@
 
 <script setup lang="ts">
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
-import { useQuery } from "@tanstack/vue-query";
-import { fetchAssignment } from "src/services/assignment-service";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
+import { useAssignmentDetail } from "src/services/assignment.query";
 
 const props = defineProps({
   assignmentId: {
@@ -29,13 +28,7 @@ const props = defineProps({
 });
 
 // TODO We should handle the case where we already have the AssignmentSummary but the full Assignment yet
-const { status, error, data } = useQuery({
-  queryKey: ["Assignment", "detail", props.assignmentId],
-  queryFn: () => fetchAssignment(props.assignmentId),
-  staleTime: 1000 * 60 * 5, // 5 min
-});
+const { status, error, data } = useAssignmentDetail(props.assignmentId);
 
-const assignment = data
+const assignment = data;
 </script>
-
-<style scoped></style>

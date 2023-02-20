@@ -8,10 +8,9 @@
 
 <script setup lang="ts">
 import SequencePlayer from "components/assignment/SequencePlayer.vue";
-import { useQuery } from "@tanstack/vue-query";
-import { fetchAssignment } from "src/services/assignment-service";
 import { Ref } from "vue";
 import { Assignment } from "src/models/assignment.interface";
+import { useAssignmentDetail } from "src/services/assignment.query";
 
 const props = defineProps({
   assignmentId: {
@@ -24,9 +23,6 @@ const props = defineProps({
   },
 });
 
-const { data } = useQuery({
-  queryKey: ["Assignment", "detail", props.assignmentId],
-  queryFn: () => fetchAssignment(props.assignmentId),
-});
+const { data } = useAssignmentDetail(props.assignmentId);
 const assignment: Ref<Assignment> | Ref<undefined> = data;
 </script>
