@@ -1,5 +1,5 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
-import { fetchAssignment, fetchMyAssignments } from "src/services/assignment-service";
+import { fetchAssignment, fetchMyAssignments } from "src/features/assignment/assignment.service";
 import { useQuery } from "@tanstack/vue-query";
 import { defaultOptions } from "src/config/queries";
 
