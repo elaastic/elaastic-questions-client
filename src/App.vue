@@ -5,7 +5,7 @@
 <script setup lang="ts">
 import { onErrorCaptured } from "vue";
 import { useRouter } from "vue-router";
-import { NotFoundError } from "src/models/error";
+import { NotFoundError } from "src/features/error.interface";
 
 const router = useRouter();
 
