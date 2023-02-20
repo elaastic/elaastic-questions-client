@@ -23,7 +23,7 @@
 
 <script setup lang="ts">
 import { computed, PropType } from "vue";
-import { Phase } from "src/models/phase";
+import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 
 const props = defineProps({
   phases: {

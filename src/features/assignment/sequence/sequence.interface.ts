@@ -1,4 +1,4 @@
-import { Phase } from "src/models/phase";
+import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 
 export interface Sequence {
   id: number;

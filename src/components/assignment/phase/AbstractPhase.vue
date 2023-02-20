@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-import { Phase } from "src/models/phase";
+import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import BaseTodo from "components/dev/BaseTodo.vue";
 import ResponsePhase from "components/assignment/phase/ResponsePhase.vue";
 

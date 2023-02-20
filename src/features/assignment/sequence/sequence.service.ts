@@ -1,5 +1,5 @@
 import { Sequence, SequenceIcon, SequenceState } from "src/features/assignment/sequence/sequence.interface";
-import { Phase } from "src/models/phase";
+import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 
 export function getActivePhase(sequence: Sequence): Phase | null {
   return sequence.activeInteractionIndex !== undefined
