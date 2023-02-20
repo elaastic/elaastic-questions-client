@@ -1,5 +1,5 @@
 <template>
-  <div v-if="sequence">
+  <div>
     <sequence-steps :phases="sequence.phases" />
     <sequence-statement :statement="sequence.statement" />
     <abstract-phase v-if="currentPhase" :phase="currentPhase" />
@@ -8,30 +8,19 @@
 
 <script setup lang="ts">
 import { computed, PropType } from "vue";
-import { Assignment } from "src/features/assignment/assignment.interface";
 import AbstractPhase from "src/features/assignment/sequence/phase/AbstractPhase.vue";
 import SequenceSteps from "src/features/assignment/sequence/SequenceSteps.vue";
 import "semantic-ui-step/step.css";
 import SequenceStatement from "src/features/assignment/sequence/SequenceStatement.vue";
 import { getActivePhase } from "src/features/assignment/sequence/sequence.service";
+import { Sequence } from "src/features/assignment/sequence/sequence.interface";
 
 const props = defineProps({
-  assignment: {
-    type: Object as PropType<Assignment>,
-    required: true,
-  },
-  sequenceIndex: {
-    type: Number,
+  sequence: {
+    type: Object as PropType<Sequence>,
     required: true,
   },
 });
 
-// TODO Handle index error
-const sequence = computed(
-  () => props.assignment.sequences[props.sequenceIndex]
-);
-
-const currentPhase = computed(() =>
-  sequence.value ? getActivePhase(sequence.value) : null
-);
+const currentPhase = computed(() => getActivePhase(props.sequence));
 </script>
