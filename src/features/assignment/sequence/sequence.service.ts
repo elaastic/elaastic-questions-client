@@ -1,5 +1,11 @@
 import { Sequence, SequenceIcon, SequenceState } from "src/features/assignment/sequence/sequence.interface";
-import { getActivePhase } from "src/services/sequence-service";
+import { Phase } from "src/models/phase";
+
+export function getActivePhase(sequence: Sequence): Phase | null {
+  return sequence.activeInteractionIndex !== undefined
+    ? sequence.phases[sequence.activeInteractionIndex]
+    : null;
+}
 
 export function pickRandomState(): SequenceState {
   const x = Math.trunc(Math.random() * 4);
