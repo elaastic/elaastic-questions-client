@@ -17,7 +17,7 @@
 
 <script setup lang="ts">
 import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
-import ErrorPanel from "components/commons/ErrorPanel.vue";
+import ErrorPanel from "src/features/app/ErrorPanel.vue";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 
 const props = defineProps({

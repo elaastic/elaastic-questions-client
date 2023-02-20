@@ -12,10 +12,10 @@
 </template>
 
 <script setup lang="ts">
-import BaseTodo from "components/dev/BaseTodo.vue";
 import { ref } from "vue";
 import SubmitArgument from "src/features/assignment/sequence/interaction/submit-argument.vue";
 import SubmitConfidence from "src/features/assignment/sequence/interaction/submit-confidence.vue";
+import BaseTodo from "src/features/dev/BaseTodo.vue";
 
 const argument = ref("");
 const confidenceDegree = ref(undefined)

@@ -13,8 +13,8 @@
 <script setup lang="ts">
 import { PropType } from "vue";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
-import BaseTodo from "components/dev/BaseTodo.vue";
 import ResponsePhase from "src/features/assignment/sequence/phase/ResponsePhase.vue";
+import BaseTodo from "src/features/dev/BaseTodo.vue";
 
 defineProps({
   phase: {

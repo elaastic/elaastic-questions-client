@@ -19,7 +19,7 @@
 <script setup lang="ts">
 import SequenceSummary from "src/features/assignment/sequence/SequenceSummary.vue";
 import { computed, PropType } from "vue";
-import PageTitle from "components/commons/PageTitle.vue";
+import PageTitle from "src/features/app/PageTitle.vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
 import { useRouter } from "vue-router";
 
