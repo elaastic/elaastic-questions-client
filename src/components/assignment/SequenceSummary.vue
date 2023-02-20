@@ -20,8 +20,8 @@
 import { computed, PropType } from "vue";
 import {
   Sequence,
-  sequenceIcons,
 } from "src/features/assignment/sequence/sequence.interface";
+import { sequenceIcons } from "src/features/assignment/sequence/sequence.service";
 
 const props = defineProps({
   sequence: {

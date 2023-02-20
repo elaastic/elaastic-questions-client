@@ -1,11 +1,11 @@
 import { Assignment, AssignmentSummary } from "src/features/assignment/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
 import {
-  pickRandomState,
   Sequence,
   Statement,
 } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/models/phase";
+import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   return mockMyAssignments().map((serverAssignmentSummary) => ({
