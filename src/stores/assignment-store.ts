@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { Assignment } from "src/models/assignment.interface";
+import { Assignment } from "src/features/assignment/assignment.interface";
 import { NotFoundError } from "src/models/error";
 
 interface AssignmentStoreState {

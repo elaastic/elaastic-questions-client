@@ -1,15 +1,15 @@
 import { Sequence } from "src/models/sequence.interface";
 
-export interface AssignmentSummary {
+interface AssignmentBase {
   id: number;
   title: string;
   lastUpdate: Date;
+}
+
+export interface AssignmentSummary extends AssignmentBase {
   nbSequence: number;
 }
 
-export interface Assignment {
-  id: number;
-  title: string;
-  lastUpdate: Date;
+export interface Assignment extends AssignmentBase {
   sequences: Sequence[]
 }

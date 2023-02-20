@@ -8,7 +8,7 @@
 
 <script setup lang="ts">
 import { computed, PropType } from "vue";
-import { Assignment } from "src/models/assignment.interface";
+import { Assignment } from "src/features/assignment/assignment.interface";
 import AbstractPhase from "components/assignment/phase/AbstractPhase.vue";
 import SequenceSteps from "components/assignment/SequenceSteps.vue";
 import "semantic-ui-step/step.css";

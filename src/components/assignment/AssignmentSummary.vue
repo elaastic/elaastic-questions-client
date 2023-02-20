@@ -20,7 +20,7 @@
 import SequenceSummary from "components/assignment/SequenceSummary.vue";
 import { computed, PropType } from "vue";
 import PageTitle from "components/commons/PageTitle.vue";
-import { Assignment } from "src/models/assignment.interface";
+import { Assignment } from "src/features/assignment/assignment.interface";
 import { useRouter } from "vue-router";
 
 const props = defineProps({

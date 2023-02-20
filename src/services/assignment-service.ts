@@ -1,4 +1,4 @@
-import { Assignment, AssignmentSummary } from "src/models/assignment.interface";
+import { Assignment, AssignmentSummary } from "src/features/assignment/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
 import {
   pickRandomState,
