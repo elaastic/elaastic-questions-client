@@ -1,7 +1,7 @@
 import { createQueryKeys } from "@lukemorales/query-key-factory";
 import { fetchAssignment, fetchMyAssignments } from "src/services/assignment-service";
 import { useQuery } from "@tanstack/vue-query";
-import { defaultOptions } from "src/services/queries";
+import { defaultOptions } from "src/config/queries";
 
 export const assignmentKeys = createQueryKeys("Assignment", {
   myList: {
