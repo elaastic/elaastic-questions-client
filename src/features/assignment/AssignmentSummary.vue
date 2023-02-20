@@ -17,7 +17,7 @@
 </template>
 
 <script setup lang="ts">
-import SequenceSummary from "components/assignment/SequenceSummary.vue";
+import SequenceSummary from "src/features/assignment/sequence/SequenceSummary.vue";
 import { computed, PropType } from "vue";
 import PageTitle from "components/commons/PageTitle.vue";
 import { Assignment } from "src/features/assignment/assignment.interface";

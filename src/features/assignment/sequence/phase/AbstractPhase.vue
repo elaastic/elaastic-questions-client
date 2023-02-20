@@ -14,7 +14,7 @@
 import { PropType } from "vue";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import BaseTodo from "components/dev/BaseTodo.vue";
-import ResponsePhase from "components/assignment/phase/ResponsePhase.vue";
+import ResponsePhase from "src/features/assignment/sequence/phase/ResponsePhase.vue";
 
 defineProps({
   phase: {
@@ -23,5 +23,3 @@ defineProps({
   },
 });
 </script>
-
-<style scoped></style>

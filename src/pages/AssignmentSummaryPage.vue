@@ -16,7 +16,7 @@
 </template>
 
 <script setup lang="ts">
-import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
+import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 

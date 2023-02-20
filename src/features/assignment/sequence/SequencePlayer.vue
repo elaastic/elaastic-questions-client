@@ -9,11 +9,11 @@
 <script setup lang="ts">
 import { computed, PropType } from "vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
-import AbstractPhase from "components/assignment/phase/AbstractPhase.vue";
-import SequenceSteps from "components/assignment/SequenceSteps.vue";
+import AbstractPhase from "src/features/assignment/sequence/phase/AbstractPhase.vue";
+import SequenceSteps from "src/features/assignment/sequence/SequenceSteps.vue";
 import "semantic-ui-step/step.css";
-import SequenceStatement from "components/assignment/SequenceStatement.vue";
-import { getActivePhase } from "src/services/sequence-service";
+import SequenceStatement from "src/features/assignment/sequence/SequenceStatement.vue";
+import { getActivePhase } from "src/features/assignment/sequence/sequence.service";
 
 const props = defineProps({
   assignment: {
@@ -35,5 +35,3 @@ const currentPhase = computed(() =>
   sequence.value ? getActivePhase(sequence.value) : null
 );
 </script>
-
-<style scoped></style>

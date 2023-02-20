@@ -7,7 +7,7 @@
 </template>
 
 <script setup lang="ts">
-import SequencePlayer from "components/assignment/SequencePlayer.vue";
+import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue";
 import { Ref } from "vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
