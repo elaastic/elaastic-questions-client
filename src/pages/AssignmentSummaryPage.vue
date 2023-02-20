@@ -18,7 +18,7 @@
 <script setup lang="ts">
 import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
-import { useAssignmentDetail } from "src/services/assignment.query";
+import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 
 const props = defineProps({
   assignmentId: {

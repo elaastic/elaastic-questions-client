@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import { formatDate } from "src/util/date";
 import ErrorPanel from "components/commons/ErrorPanel.vue";
-import { useMyAssignments } from "src/services/assignment.query";
+import { useMyAssignments } from "src/features/assignment/assignment.query";
 
 const { status, data, error } = useMyAssignments();
 

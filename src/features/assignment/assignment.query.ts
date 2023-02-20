@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/vue-query";
 import { defaultOptions } from "src/services/queries";
 
 export const assignmentKeys = createQueryKeys("Assignment", {
-  my: {
+  myList: {
     queryKey: null,
     queryFn: fetchMyAssignments
   },
@@ -16,7 +16,7 @@ export const assignmentKeys = createQueryKeys("Assignment", {
 
 export function useMyAssignments() {
   return useQuery({
-    ...assignmentKeys.my,
+    ...assignmentKeys.myList,
     ...defaultOptions
   })
 }

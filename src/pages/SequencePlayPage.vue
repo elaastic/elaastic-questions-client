@@ -10,7 +10,7 @@
 import SequencePlayer from "components/assignment/SequencePlayer.vue";
 import { Ref } from "vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
-import { useAssignmentDetail } from "src/services/assignment.query";
+import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 
 const props = defineProps({
   assignmentId: {
