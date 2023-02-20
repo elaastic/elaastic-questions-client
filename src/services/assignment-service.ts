@@ -4,7 +4,7 @@ import {
   pickRandomState,
   Sequence,
   Statement,
-} from "src/models/sequence.interface";
+} from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/models/phase";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {

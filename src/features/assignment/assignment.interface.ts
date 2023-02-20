@@ -1,4 +1,4 @@
-import { Sequence } from "src/models/sequence.interface";
+import { Sequence } from "src/features/assignment/sequence/sequence.interface";
 
 interface AssignmentBase {
   id: number;

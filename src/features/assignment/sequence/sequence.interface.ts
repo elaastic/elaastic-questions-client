@@ -1,4 +1,5 @@
 import { Phase } from "src/models/phase";
+import { getActivePhase } from "src/services/sequence-service";
 
 export interface Sequence {
   id: number;
@@ -7,30 +8,6 @@ export interface Sequence {
   phases: Phase[];
   activeInteractionIndex?: number;
   resultsArePublished: boolean;
-}
-
-export class DefaultSequence implements Sequence {
-  id: number;
-  statement: Statement;
-  activeInteractionIndex?: number;
-  state: SequenceState;
-  phases: Phase[];
-  resultsArePublished: boolean;
-
-  constructor(sequence: Sequence) {
-    this.id = sequence.id;
-    this.statement = sequence.statement;
-    this.state = sequence.state;
-    this.phases = sequence.phases;
-    this.activeInteractionIndex = sequence.activeInteractionIndex;
-    this.resultsArePublished = sequence.resultsArePublished;
-  }
-
-  getActivePhase(): Phase | null {
-    return this.activeInteractionIndex !== undefined
-      ? this.phases[this.activeInteractionIndex]
-      : null;
-  }
 }
 
 export interface Statement {
@@ -63,13 +40,13 @@ export type SequenceIcon =
   | "forum"
   | "lock";
 
-export function sequenceIcons(sequence: DefaultSequence): SequenceIcon[] {
+export function sequenceIcons(sequence: Sequence): SequenceIcon[] {
   switch (sequence.state) {
     case "NOT_STARTED":
       return ["not_started"];
 
     case "IN_PROGRESS":
-      switch (sequence.getActivePhase()?.type) {
+      switch (getActivePhase(sequence)?.type) {
         case "RESPONSE_SUBMISSION":
           return ["edit"];
 
