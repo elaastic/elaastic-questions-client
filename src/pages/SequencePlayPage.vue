@@ -2,16 +2,15 @@
   <sequence-player
     v-if="assignment"
     :assignment="assignment"
-    :sequence-index="sequenceIndex - 1" />
+    :sequence-index="sequenceIndex - 1"
+  />
 </template>
 
 <script setup lang="ts">
-import {computed, watchEffect} from "vue";
-import { useAssignmentStore } from "stores/assignment-store";
-import SequencePlayer from "components/assignment/SequencePlayer.vue";
-import {useQuasar} from "quasar";
-const quasar = useQuasar()
-const assignmentStore = useAssignmentStore();
+import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue";
+import { Ref } from "vue";
+import { Assignment } from "src/features/assignment/assignment.interface";
+import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 
 const props = defineProps({
   assignmentId: {
@@ -24,25 +23,6 @@ const props = defineProps({
   },
 });
 
-const assignment = computed(() => assignmentStore.get(props.assignmentId));
-
-const loading = computed(() => {
-  if (assignmentStore.metadata.loading) {
-    return { message: "Loading assignments..." };
-  } else if (assignment.value?.sequences?.status === "Loading") {
-    return { message: "Loading sequences..." };
-  } else {
-    return false;
-  }
-});
-
-watchEffect(() => {
-  if (loading.value) {
-    quasar.loading.show(loading.value);
-  } else {
-    quasar.loading.hide();
-  }
-});
+const { data } = useAssignmentDetail(props.assignmentId);
+const assignment: Ref<Assignment> | Ref<undefined> = data;
 </script>
-
-<style scoped></style>

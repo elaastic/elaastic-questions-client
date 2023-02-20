@@ -43,5 +43,3 @@ const argument = computed({
   },
 });
 </script>
-
-<style scoped></style>

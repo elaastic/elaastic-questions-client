@@ -33,10 +33,10 @@ const props = defineProps({
 const emit = defineEmits(["update:modelValue"]);
 
 const confidenceDegree = computed({
-  get(): number {
+  get(): number | undefined {
     return props.modelValue;
   },
-  set(value: number) {
+  set(value: number | undefined) {
     emit("update:modelValue", value);
   },
 });

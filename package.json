@@ -12,7 +12,9 @@
     "test": "echo \"No test specified\" && exit 0"
   },
   "dependencies": {
+    "@lukemorales/query-key-factory": "^1.1.0",
     "@quasar/extras": "^1.0.0",
+    "@tanstack/vue-query": "^4.24.6",
     "axios": "^0.21.1",
     "pinia": "^2.0.11",
     "quasar": "^2.6.0",

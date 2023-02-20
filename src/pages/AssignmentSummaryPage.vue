@@ -1,17 +1,24 @@
 <template>
   <q-page v-if="assignment">
-    <assignment-summary :assignment="assignment" />
+    <q-inner-loading
+      :showing="status === 'loading'"
+      label="Loading assignment..."
+      color="grey"
+      label-class="text-grey"
+    />
+
+    <error-panel v-if="status === 'error'">
+      {{ error }}
+    </error-panel>
+
+    <assignment-summary v-if="status === 'success'" :assignment="assignment" />
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { computed, watchEffect } from "vue";
-import { useAssignmentStore } from "stores/assignment-store";
-import AssignmentSummary from "components/assignment/AssignmentSummary.vue";
-import { useQuasar } from "quasar";
-
-const quasar = useQuasar();
-const assignmentStore = useAssignmentStore();
+import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
+import ErrorPanel from "src/features/app/ErrorPanel.vue";
+import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 
 const props = defineProps({
   assignmentId: {
@@ -20,25 +27,8 @@ const props = defineProps({
   },
 });
 
-const assignment = computed(() => assignmentStore.get(props.assignmentId));
+// TODO We should handle the case where we already have the AssignmentSummary but the full Assignment yet
+const { status, error, data } = useAssignmentDetail(props.assignmentId);
 
-const loading = computed(() => {
-  if (assignmentStore.metadata.loading) {
-    return { message: "Loading assignments..." };
-  } else if (assignment.value?.sequences?.status === "Loading") {
-    return { message: "Loading sequences..." };
-  } else {
-    return false;
-  }
-});
-
-watchEffect(() => {
-  if (loading.value) {
-    quasar.loading.show(loading.value);
-  } else {
-    quasar.loading.hide();
-  }
-});
+const assignment = data;
 </script>
-
-<style scoped></style>

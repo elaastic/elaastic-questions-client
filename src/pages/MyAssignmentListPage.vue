@@ -1,49 +1,52 @@
 <template>
   <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
-    <div
-      v-for="assignment in myAssignmentList"
-      :key="`assignment-${assignment.id}`"
-      class="assignment row items-center non-selectable relative-position cursor-pointer"
-      v-ripple.early
-      @click="
-        $router.push({
-          name: 'assignment-summary',
-          params: { assignmentId: assignment.id },
-        })
-      "
-    >
-      <div class="col assignment-content">
-        <span class="assignment-title">{{ assignment.title }}</span
-        ><br />
-        <span class="assignment-lastUpdated">{{
-          formatDate(assignment.lastUpdate)
-        }}</span>
+    <q-inner-loading
+      :showing="status === 'loading'"
+      label="Loading assignments..."
+      color="grey"
+      label-class="text-grey"
+    />
+
+    <error-panel v-if="status === 'error'">
+      {{ error }}
+    </error-panel>
+
+    <template v-if="status === 'success'">
+      <div
+        v-for="assignment in myAssignmentList"
+        :key="`assignment-${assignment.id}`"
+        class="assignment row items-center non-selectable relative-position cursor-pointer"
+        v-ripple.early
+        @click="
+          $router.push({
+            name: 'assignment-summary',
+            params: { assignmentId: assignment.id },
+          })
+        "
+      >
+        <div class="col assignment-content">
+          <span class="assignment-title">{{ assignment.title }}</span
+          ><br />
+          <span class="assignment-lastUpdated">{{
+            formatDate(assignment.lastUpdate)
+          }}</span>
+        </div>
+        <div class="col-auto">
+          <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />
+        </div>
       </div>
-      <div class="col-auto">
-        <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />
-      </div>
-    </div>
+    </template>
   </q-page>
 </template>
 
 <script setup lang="ts">
-import { useAssignmentStore } from "stores/assignment-store";
 import { formatDate } from "src/util/date";
-import { computed, watchEffect } from "vue";
-import { useQuasar } from "quasar";
+import ErrorPanel from "src/features/app/ErrorPanel.vue";
+import { useMyAssignments } from "src/features/assignment/assignment.query";
 
-const quasar = useQuasar();
-const assignmentStore = useAssignmentStore();
-const myAssignmentList = computed(() => assignmentStore.getAll);
-const loading = computed(() => assignmentStore.metadata.loading);
+const { status, data, error } = useMyAssignments();
 
-watchEffect(() => {
-  if (loading.value) {
-    quasar.loading.show({ message: "Loading assignments..." });
-  } else {
-    quasar.loading.hide();
-  }
-});
+const myAssignmentList = data;
 </script>
 
 <style scoped lang="scss">

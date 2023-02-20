@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-import { Statement } from "src/models/sequence.interface";
+import { Statement } from "src/features/assignment/sequence/sequence.interface";
 
 defineProps({
   statement: {
@@ -21,5 +21,3 @@ defineProps({
   },
 });
 </script>
-
-<style scoped></style>
