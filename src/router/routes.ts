@@ -16,6 +16,7 @@ const routes: RouteRecordRaw[] = [
       },
       {
         path: "assignment/:assignmentId/summary",
+        alias: "assignment/:assignmentId",
         name: "assignment-summary",
         component: () => import("pages/AssignmentSummaryPage.vue"),
         props: (route) => ({
@@ -24,6 +25,10 @@ const routes: RouteRecordRaw[] = [
         meta: {
           title: "Assignment Summary",
         },
+      },
+      {
+        path: "assignment/:assignmentId/play",
+        redirect: to => `/assignment/${to.params.assignmentId}/play/1`
       },
       {
         path: "assignment/:assignmentId/play/:sequenceIndex",
