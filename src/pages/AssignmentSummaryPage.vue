@@ -1,5 +1,5 @@
 <template>
-  <q-page v-if="assignment">
+  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
     <q-inner-loading
       :showing="status === 'loading'"
       label="Loading assignment..."

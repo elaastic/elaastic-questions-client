@@ -1,5 +1,14 @@
 <template>
-  <sequence-player v-if="sequence" :sequence="sequence" />
+  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
+    <q-inner-loading
+      :showing="status === 'loading'"
+      label="Loading assignment..."
+      color="grey"
+      label-class="text-grey"
+    />
+
+    <sequence-player v-if="sequence" :sequence="sequence" />
+  </q-page>
 </template>
 
 <script setup lang="ts">
@@ -21,10 +30,9 @@ const props = defineProps({
   },
 });
 
-// TODO Handle loading state
 // TODO Handle error state
 
-const { data } = useAssignmentDetail(props.assignmentId);
+const { status, data } = useAssignmentDetail(props.assignmentId);
 const assignment: Ref<Assignment> | Ref<undefined> = data;
 
 const sequence = computed(() => {

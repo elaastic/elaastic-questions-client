@@ -1,4 +1,7 @@
-import { Assignment, AssignmentSummary } from "src/features/assignment/assignment.interface";
+import {
+  Assignment,
+  AssignmentSummary,
+} from "src/features/assignment/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
 import {
   Sequence,
@@ -6,6 +9,7 @@ import {
 } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
+import { delay } from "src/util/dev";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   return mockMyAssignments().map((serverAssignmentSummary) => ({
@@ -17,6 +21,7 @@ export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
 export async function fetchAssignment(
   assignmentId: number
 ): Promise<Assignment> {
+  await delay(3000) // Simulate latency
   return mockAssignment(assignmentId);
 }
 
@@ -62,8 +67,8 @@ const mockStatement: () => Statement = () => ({
 });
 
 // TODO Randomize phase state
-const mockPhases: () => Phase[] = () => ([
-  {type: "RESPONSE_SUBMISSION", state: "CLOSED" },
-  {type: "EVALUATION", state: "CLOSED" },
-  {type: "READ", state: "CLOSED" },
-])
+const mockPhases: () => Phase[] = () => [
+  { type: "RESPONSE_SUBMISSION", state: "CLOSED" },
+  { type: "EVALUATION", state: "CLOSED" },
+  { type: "READ", state: "CLOSED" },
+];
