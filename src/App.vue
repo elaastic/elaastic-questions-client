@@ -6,6 +6,15 @@
 import { onErrorCaptured } from "vue";
 import { useRouter } from "vue-router";
 import { NotFoundError } from "src/features/error.interface";
+import { useQueryClient } from "@tanstack/vue-query";
+
+// Configure the QueryClient
+const queryClient = useQueryClient();
+queryClient.setDefaultOptions({
+  queries :{
+    staleTime: 1000 * 60 * 5, // 5 min
+  }
+})
 
 const router = useRouter();
 
