@@ -1,18 +1,11 @@
 <template>
-  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
-    <q-inner-loading
-      :showing="status === 'loading'"
-      label="Loading assignment..."
-      color="grey"
-      label-class="text-grey"
-    />
-
-    <error-panel v-if="status === 'error'">
-      {{ error }}
-    </error-panel>
-
+  <app-page
+    :status="status"
+    loading-message="Loading assignment..."
+    :error="error"
+  >
     <sequence-player v-if="sequence" :sequence="sequence" />
-  </q-page>
+  </app-page>
 </template>
 
 <script setup lang="ts">
@@ -22,7 +15,7 @@ import { Assignment } from "src/features/assignment/assignment.interface";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 import { NotFoundError } from "src/features/error.interface";
 import { useRoute } from "vue-router";
-import ErrorPanel from "src/features/app/ErrorPanel.vue";
+import AppPage from "src/features/app/AppPage.vue";
 
 const props = defineProps({
   assignmentId: {

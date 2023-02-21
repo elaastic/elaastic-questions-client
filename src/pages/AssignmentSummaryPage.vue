@@ -1,24 +1,17 @@
 <template>
-  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
-    <q-inner-loading
-      :showing="status === 'loading'"
-      label="Loading assignment..."
-      color="grey"
-      label-class="text-grey"
-    />
-
-    <error-panel v-if="status === 'error'">
-      {{ error }}
-    </error-panel>
-
+  <app-page
+    :status="status"
+    loading-message="Loading assignment..."
+    :error="error"
+  >
     <assignment-summary v-if="status === 'success'" :assignment="assignment" />
-  </q-page>
+  </app-page>
 </template>
 
 <script setup lang="ts">
 import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
-import ErrorPanel from "src/features/app/ErrorPanel.vue";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
+import AppPage from "src/features/app/AppPage.vue";
 
 const props = defineProps({
   assignmentId: {
