@@ -1,7 +1,7 @@
 <template>
   <app-page
     :status="status"
-    loading-message="Loading assignment..."
+    :loading-message="$t('assignment.loading', 1)"
     :error="error"
   >
     <assignment-summary v-if="status === 'success'" :assignment="assignment" />

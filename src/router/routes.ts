@@ -11,7 +11,7 @@ const routes: RouteRecordRaw[] = [
         component: () => import("pages/MyAssignmentListPage.vue"),
         meta: {
           home: true,
-          title: "My assignments",
+          titleKey: "assignment.myList",
         },
       },
       {
@@ -23,7 +23,7 @@ const routes: RouteRecordRaw[] = [
           assignmentId: parseIntFromUrlParam(route.params.assignmentId),
         }),
         meta: {
-          title: "Assignment Summary",
+          titleKey: "assignment.summary",
         },
       },
       {
@@ -39,7 +39,7 @@ const routes: RouteRecordRaw[] = [
           sequenceIndex: parseIntFromUrlParam(route.params.sequenceIndex),
         }),
         meta: {
-          title: "Play sequence",
+          titleKey: "sequence.play",
         },
       },
     ],

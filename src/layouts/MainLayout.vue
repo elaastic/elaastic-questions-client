@@ -47,11 +47,15 @@
 <script setup lang="ts">
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import { useI18n } from "vue-i18n";
 
 const route = useRoute();
+const i18n = useI18n();
 
 const title = computed(() => {
-  return route.meta.title ?? "elaastic";
+  return route.meta.titleKey ?
+    i18n.t(route.meta.titleKey as string)
+    : route.meta.title ?? "elaastic";
 });
 
 const isHomePage = computed(() => {
