@@ -9,8 +9,11 @@ import {
 } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
+import { delay } from "src/util/dev";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
+
+  await delay(3000)
 
   return mockMyAssignments().map((serverAssignmentSummary) => ({
     ...serverAssignmentSummary,

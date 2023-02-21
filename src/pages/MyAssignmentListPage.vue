@@ -1,7 +1,7 @@
 <template>
   <app-page
     :status="status"
-    loading-message="Loading assignments..."
+    :loading-message="$t('assignment.loading', 2)"
     :error="error"
   >
     <div

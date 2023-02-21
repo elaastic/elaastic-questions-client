@@ -2,7 +2,7 @@
   <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
     <q-inner-loading
       :showing="status === 'loading'"
-      label="Loading assignments..."
+      :label="loadingMessage"
       color="grey"
       label-class="text-grey"
     />
