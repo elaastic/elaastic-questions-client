@@ -11,6 +11,7 @@ import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
+
   return mockMyAssignments().map((serverAssignmentSummary) => ({
     ...serverAssignmentSummary,
     lastUpdate: new Date(serverAssignmentSummary.lastUpdate),

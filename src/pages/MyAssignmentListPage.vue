@@ -1,48 +1,39 @@
 <template>
-  <q-page class="q-pa-md" style="max-width: 800px; margin: auto">
-    <q-inner-loading
-      :showing="status === 'loading'"
-      label="Loading assignments..."
-      color="grey"
-      label-class="text-grey"
-    />
-
-    <error-panel v-if="status === 'error'">
-      {{ error }}
-    </error-panel>
-
-    <template v-if="status === 'success'">
-      <div
-        v-for="assignment in myAssignmentList"
-        :key="`assignment-${assignment.id}`"
-        class="assignment row items-center non-selectable relative-position cursor-pointer"
-        v-ripple.early
-        @click="
-          $router.push({
-            name: 'assignment-summary',
-            params: { assignmentId: assignment.id },
-          })
-        "
-      >
-        <div class="col assignment-content">
-          <span class="assignment-title">{{ assignment.title }}</span
-          ><br />
-          <span class="assignment-lastUpdated">{{
-            formatDate(assignment.lastUpdate)
-          }}</span>
-        </div>
-        <div class="col-auto">
-          <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />
-        </div>
+  <app-page
+    :status="status"
+    loading-message="Loading assignments..."
+    :error="error"
+  >
+    <div
+      v-for="assignment in myAssignmentList"
+      :key="`assignment-${assignment.id}`"
+      class="assignment row items-center non-selectable relative-position cursor-pointer"
+      v-ripple.early
+      @click="
+        $router.push({
+          name: 'assignment-summary',
+          params: { assignmentId: assignment.id },
+        })
+      "
+    >
+      <div class="col assignment-content">
+        <span class="assignment-title">{{ assignment.title }}</span
+        ><br />
+        <span class="assignment-lastUpdated">{{
+          formatDate(assignment.lastUpdate)
+        }}</span>
       </div>
-    </template>
-  </q-page>
+      <div class="col-auto">
+        <q-icon name="arrow_forward_ios" size="sm" color="grey-6" />
+      </div>
+    </div>
+  </app-page>
 </template>
 
 <script setup lang="ts">
 import { formatDate } from "src/util/date";
-import ErrorPanel from "src/features/app/ErrorPanel.vue";
 import { useMyAssignments } from "src/features/assignment/assignment.query";
+import AppPage from "src/features/app/AppPage.vue";
 
 const { status, data, error } = useMyAssignments();
 
