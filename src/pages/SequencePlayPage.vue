@@ -7,6 +7,8 @@ import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue"
 import { computed, Ref } from "vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
+import { NotFoundError } from "src/features/error.interface";
+import { useRoute } from "vue-router";
 
 const props = defineProps({
   assignmentId: {
@@ -19,10 +21,27 @@ const props = defineProps({
   },
 });
 
+// TODO Handle loading state
+// TODO Handle error state
+
 const { data } = useAssignmentDetail(props.assignmentId);
 const assignment: Ref<Assignment> | Ref<undefined> = data;
 
-const sequence = computed(() =>
-  assignment.value ? assignment.value.sequences[props.sequenceIndex - 1] : null
-);
+const sequence = computed(() => {
+  if (!assignment.value) {
+    return null;
+  }
+
+  if (
+    props.sequenceIndex <= 0 ||
+    props.sequenceIndex > assignment.value.sequences.length
+  ) {
+    throw new NotFoundError(
+      `There is no sequence ${props.sequenceIndex} on this assignment`,
+      useRoute().path
+    );
+  }
+
+  return assignment.value.sequences[props.sequenceIndex - 1];
+});
 </script>

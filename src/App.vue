@@ -20,7 +20,7 @@ const router = useRouter();
 
 onErrorCaptured((err: Error) => {
   if (err instanceof NotFoundError) {
-    router.replace({ name: "404" });
+    router.replace({ name: "404", query: { uri: err.uri } });
 
     return false;
   }
