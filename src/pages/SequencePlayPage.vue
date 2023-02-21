@@ -7,6 +7,10 @@
       label-class="text-grey"
     />
 
+    <error-panel v-if="status === 'error'">
+      {{ error }}
+    </error-panel>
+
     <sequence-player v-if="sequence" :sequence="sequence" />
   </q-page>
 </template>
@@ -18,6 +22,7 @@ import { Assignment } from "src/features/assignment/assignment.interface";
 import { useAssignmentDetail } from "src/features/assignment/assignment.query";
 import { NotFoundError } from "src/features/error.interface";
 import { useRoute } from "vue-router";
+import ErrorPanel from "src/features/app/ErrorPanel.vue";
 
 const props = defineProps({
   assignmentId: {
@@ -30,9 +35,7 @@ const props = defineProps({
   },
 });
 
-// TODO Handle error state
-
-const { status, data } = useAssignmentDetail(props.assignmentId);
+const { status, data, error } = useAssignmentDetail(props.assignmentId);
 const assignment: Ref<Assignment> | Ref<undefined> = data;
 
 const sequence = computed(() => {

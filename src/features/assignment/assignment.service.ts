@@ -9,7 +9,6 @@ import {
 } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
-import { delay } from "src/util/dev";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
   return mockMyAssignments().map((serverAssignmentSummary) => ({
@@ -21,7 +20,8 @@ export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
 export async function fetchAssignment(
   assignmentId: number
 ): Promise<Assignment> {
-  await delay(3000) // Simulate latency
+  // await delay(3000) // Simulate latency
+  // throw new Error("Simulate error")
   return mockAssignment(assignmentId);
 }
 
