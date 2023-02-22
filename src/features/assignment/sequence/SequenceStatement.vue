@@ -12,7 +12,7 @@
 
 <script setup lang="ts">
 import { PropType } from "vue";
-import { Statement } from "src/features/assignment/sequence/sequence.interface";
+import { Statement } from "src/features/assignment/sequence/statement.interface";
 
 defineProps({
   statement: {

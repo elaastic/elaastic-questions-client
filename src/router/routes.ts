@@ -42,6 +42,13 @@ const routes: RouteRecordRaw[] = [
           titleKey: "sequence.play",
         },
       },
+      {
+        path: "test/data",
+        component: () => import("pages/TestDataPage.vue"),
+        meta: {
+          title: "Test Server API"
+        }
+      }
     ],
   },
 

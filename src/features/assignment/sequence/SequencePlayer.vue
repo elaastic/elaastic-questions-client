@@ -1,6 +1,7 @@
 <template>
   <div>
-    <sequence-steps :phases="sequence.phases" />
+<!--    TODO : get the phases -->
+<!--    <sequence-steps :phases="sequence.phases" />-->
     <sequence-statement :statement="sequence.statement" />
     <abstract-phase v-if="currentPhase" :phase="currentPhase" />
   </div>

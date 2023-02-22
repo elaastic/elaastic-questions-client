@@ -26,4 +26,5 @@ onErrorCaptured((err: Error) => {
   }
   return true;
 });
+
 </script>

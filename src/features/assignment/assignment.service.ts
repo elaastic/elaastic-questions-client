@@ -1,38 +1,41 @@
 import {
-  Assignment,
   AssignmentSummary,
+  TServerAssignment,
+  ServerAssignmentSummary,
+  ServerGetMyAssignment,
+  Assignment,
 } from "src/features/assignment/assignment.interface";
 import { faker } from "@faker-js/faker/locale/fr";
-import {
-  Sequence,
-  Statement,
-} from "src/features/assignment/sequence/sequence.interface";
+import { Sequence } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
-import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
-import { delay } from "src/util/dev";
+import { api } from "boot/axios";
+import { Statement } from "src/features/assignment/sequence/statement.interface";
+import { validateData } from "src/util/data";
 
 export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
+  const response = await api.get("/learner/assignments");
 
-  await delay(3000)
+  const decoded = ServerGetMyAssignment.decode(response.data);
+  const validated = validateData(decoded)
 
-  return mockMyAssignments().map((serverAssignmentSummary) => ({
-    ...serverAssignmentSummary,
-    lastUpdate: new Date(serverAssignmentSummary.lastUpdate),
+  return validated.map((assignment: ServerAssignmentSummary) => ({
+    ...assignment,
+    lastUpdated: new Date(assignment.lastUpdated),
   }));
 }
 
 export async function fetchAssignment(
   assignmentId: number
 ): Promise<Assignment> {
-  // await delay(3000) // Simulate latency
-  // throw new Error("Simulate error")
-  return mockAssignment(assignmentId);
-}
+  const response = await api.get(`/learner/assignments/${assignmentId}`);
 
-function summarize(assignment: Assignment): AssignmentSummary {
+  const decoded = TServerAssignment.decode(response.data);
+  const validated = validateData(decoded)
+
+  // TODO parse Date in a more elegant way
   return {
-    ...assignment,
-    nbSequence: assignment.sequences.length,
+    ...validated,
+    lastUpdated: new Date(validated.lastUpdated),
   };
 }
 
@@ -40,14 +43,13 @@ function mockMyAssignments(): AssignmentSummary[] {
   const nbAssignments = faker.datatype.number({ min: 3, max: 10 });
   return [...Array(nbAssignments).keys()]
     .map(faker.datatype.number)
-    .map(mockAssignment)
-    .map(summarize);
+    .map(mockAssignment);
 }
 
 const mockAssignment: (id: number) => Assignment = (id) => ({
   id,
   title: faker.lorem.words(),
-  lastUpdate: faker.date.between(
+  lastUpdated: faker.date.between(
     "2020-01-01T00:00:00.000Z",
     "2030-01-01T00:00:00.000Z"
   ),
@@ -62,7 +64,7 @@ const mockSequence: () => Sequence = () => ({
   activeInteractionIndex: Math.trunc(Math.random() * 3),
   phases: mockPhases(),
   resultsArePublished: false,
-  state: pickRandomState(),
+  state: "beforeStart", // TODO *** pickRandomState(),
 });
 
 const mockStatement: () => Statement = () => ({
@@ -72,7 +74,7 @@ const mockStatement: () => Statement = () => ({
 
 // TODO Randomize phase state
 const mockPhases: () => Phase[] = () => [
-  { type: "RESPONSE_SUBMISSION", state: "CLOSED" },
+  { type: "RESPONSE", state: "CLOSED" },
   { type: "EVALUATION", state: "CLOSED" },
   { type: "READ", state: "CLOSED" },
 ];

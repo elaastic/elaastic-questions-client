@@ -20,7 +20,7 @@ const props = defineProps({
   },
 });
 
-// TODO We should handle the case where we already have the AssignmentSummary but the full Assignment yet
+// TODO We should handle the case where we already have the AssignmentSummary but not the full Assignment yet
 const { status, error, data } = useAssignmentDetail(props.assignmentId);
 
 const assignment = data;
