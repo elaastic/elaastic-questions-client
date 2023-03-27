@@ -13,11 +13,11 @@ import AbstractPhase from "src/features/assignment/sequence/phase/AbstractPhase.
 import "semantic-ui-step/step.css";
 import SequenceStatement from "src/features/assignment/sequence/SequenceStatement.vue";
 import { getActivePhase } from "src/features/assignment/sequence/sequence.service";
-import { ServerSequence } from "src/features/assignment/sequence/sequence.interface";
+import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
 
 const props = defineProps({
   sequence: {
-    type: Object as PropType<ServerSequence>,
+    type: Object as PropType<ClientSequence>,
     required: true,
   },
 });
