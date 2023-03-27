@@ -13,7 +13,7 @@ import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue"
 import { Ref } from "vue";
 import AppPage from "src/features/app/AppPage.vue";
 import { useSequence } from "src/features/assignment/sequence/sequence.query";
-import { ServerSequence } from "src/features/assignment/sequence/sequence.interface";
+import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
 
 const props = defineProps({
   assignmentId: {
@@ -32,6 +32,6 @@ const { status, data, error } = useSequence(
   props.assignmentId,
   props.sequenceIndex
 );
-const sequence: Ref<ServerSequence> | Ref<undefined> = data;
+const sequence: Ref<ClientSequence> | Ref<undefined> = data;
 
 </script>

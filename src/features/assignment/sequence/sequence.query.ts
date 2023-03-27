@@ -3,14 +3,14 @@ import { useQuery } from "@tanstack/vue-query";
 import { fetchSequenceList } from "src/features/assignment/sequence/sequence.service";
 
 export const sequenceKeys = createQueryKeys("Sequence", {
-  list: (assignmentId: number) => ({
-    queryKey: [assignmentId],
+  assignment: (assignmentId: number) => ({
+    queryKey: [assignmentId, "sequences"],
     queryFn: () => fetchSequenceList(assignmentId),
   }),
 });
 
 export function useSequenceList(assignmentId: number) {
-  return useQuery(sequenceKeys.list(assignmentId));
+  return useQuery(sequenceKeys.assignment(assignmentId));
 }
 
 /**
@@ -20,7 +20,7 @@ export function useSequenceList(assignmentId: number) {
  */
 export function useSequence(assignmentId: number, sequenceIndex: number) {
   return useQuery({
-    ...sequenceKeys.list(assignmentId),
+    ...sequenceKeys.assignment(assignmentId),
     select: (sequences) => {
       if (sequences.length < sequenceIndex) {
         throw new Error(
