@@ -7,10 +7,10 @@ export const sequenceKeys = createQueryKeys("Sequence", {
     queryKey: [assignmentId],
     queryFn: () => fetchSequenceList(assignmentId),
   }),
-})
+});
 
 export function useSequenceList(assignmentId: number) {
-  return useQuery(sequenceKeys.list(assignmentId))
+  return useQuery(sequenceKeys.list(assignmentId));
 }
 
 /**
@@ -20,10 +20,15 @@ export function useSequenceList(assignmentId: number) {
  */
 export function useSequence(assignmentId: number, sequenceIndex: number) {
   return useQuery({
-    ...(sequenceKeys.list(assignmentId)),
+    ...sequenceKeys.list(assignmentId),
     select: (sequences) => {
-      return sequences[sequenceIndex - 1]
-    }
-  });
+      if (sequences.length < sequenceIndex) {
+        throw new Error(
+          `There is no sequence for index "${sequenceIndex}" in assignment "${assignmentId}"`
+        );
+      }
 
+      return sequences[sequenceIndex - 1];
+    },
+  });
 }
