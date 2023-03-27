@@ -1,8 +1,6 @@
 import * as t from "io-ts";
 import { TServerStatement } from "src/features/assignment/sequence/statement.interface";
-import {
-  TServerPhase,
-} from "src/features/assignment/sequence/phase/phase.interface";
+import { TServerPhase } from "src/features/assignment/sequence/phase/phase.interface";
 
 const TServerSequenceState = t.union([
   t.literal("beforeStart"),
@@ -50,4 +48,15 @@ export const TServerSequence = t.type({
   resultsArePublished: t.boolean,
 });
 
-export type Sequence = t.TypeOf<typeof TServerSequence>;
+export type ServerSequence = t.TypeOf<typeof TServerSequence>;
+
+export type ClientSequence = Omit<ServerSequence, "state"> & {
+  state: ClientSequenceState;
+};
+
+export function convertSequence(sequence: ServerSequence): ClientSequence {
+  return {
+    ...sequence,
+    state: convertSequenceState(sequence.state)
+  }
+}

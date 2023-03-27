@@ -1,27 +1,23 @@
 <template>
   <page-title icon="menu_book" :title="assignment.title" />
 
-  <q-banner class="bg-negative" v-if="nbSequences === 0">
-    There is no sequence in this assignment.
-  </q-banner>
-
-  <div class="q-ma-sm sequences">
-    <sequence-summary
-      v-for="(sequence, index) in assignment.sequences"
-      :key="sequence.id"
-      :sequence="sequence"
-      :num="index + 1"
-      @click="openSequence(index)"
+  <app-data-loader :status="status" :error="error" loading-message="TODO I18N">
+    <assignment-content
+      :assignment="assignment"
+      :sequences="sequences"
+      v-if="sequences"
     />
-  </div>
+  </app-data-loader>
 </template>
 
 <script setup lang="ts">
-import SequenceSummary from "src/features/assignment/sequence/SequenceSummary.vue";
-import { computed, PropType } from "vue";
+import { PropType, Ref } from "vue";
 import PageTitle from "src/features/app/PageTitle.vue";
 import { Assignment } from "src/features/assignment/assignment.interface";
-import { useRouter } from "vue-router";
+import { useSequenceList } from "src/features/assignment/sequence/sequence.query";
+import AssignmentContent from "src/features/assignment/AssignmentContent.vue";
+import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
+import AppDataLoader from "src/features/app/AppDataLoader.vue";
 
 const props = defineProps({
   assignment: {
@@ -30,24 +26,8 @@ const props = defineProps({
   },
 });
 
-const nbSequences = computed(() => props.assignment.sequences.length);
-
-const router = useRouter();
-
-function openSequence(sequenceIndex: number) {
-  router.push({
-    name: "play-sequence",
-    params: {
-      assignmentId: props.assignment.id,
-      sequenceIndex: sequenceIndex + 1,
-    },
-  });
-}
+const { status, error, data } = useSequenceList(props.assignment.id);
+const sequences: Ref<ClientSequence[]> | Ref<undefined> = data;
 </script>
 
-<style scoped>
-.sequences {
-  border: solid 1px gray;
-  border-radius: 4px;
-}
-</style>
+<style scoped></style>

@@ -1,58 +1,47 @@
+import * as t from "io-ts";
 import {
-  ClientSequenceState,
-  convertSequenceState,
-  Sequence,
+  ServerSequence,
   SequenceIcon,
-  TServerSequence
+  TServerSequence,
+  ClientSequence,
+  convertSequence,
 } from "src/features/assignment/sequence/sequence.interface";
 import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
 import { api } from "boot/axios";
-import { isLeft } from "fp-ts/Either";
-import { PathReporter } from "io-ts/PathReporter";
+import { validateData } from "src/util/data";
+
+// TODO Check if we need a SequenceSummary
+export async function fetchSequenceList(
+  assignmentId: number
+): Promise<ClientSequence[]> {
+  const response = await api.get(
+    `/learner/assignment/${assignmentId}/sequences`
+  );
+
+  const decoded = t.array(TServerSequence).decode(response.data);
+  return validateData(decoded).map(convertSequence);
+}
 
 export async function fetchSequenceDetail(
   assignmentId: number,
   sequenceIndex: number
-): Promise<Sequence> {
+): Promise<ServerSequence> {
   const response = await api.get(
     `/learner/assignment/${assignmentId}/sequences/${sequenceIndex}`
   );
 
   const decoded = TServerSequence.decode(response.data);
-
-  // TODO Should be factorized
-  if(isLeft(decoded)) {
-    throw Error(
-      `Could not validate data: ${PathReporter.report(decoded).join("\n")}`
-    );
-  }
-
-  return decoded.right
+  return validateData(decoded);
 }
 
-export function getActivePhase(sequence: Sequence): Phase | null {
+export function getActivePhase(sequence: ClientSequence): Phase | null {
   return sequence.activeInteractionIndex
     ? sequence.phases[sequence.activeInteractionIndex - 1]
     : null;
 }
 
-export function pickRandomState(): ClientSequenceState {
-  const x = Math.trunc(Math.random() * 4);
-
-  switch (x) {
-    case 0:
-      return "NOT_STARTED";
-    case 1:
-      return "IN_PROGRESS";
-    case 2:
-      return "PAUSED";
-    default:
-      return "DONE";
-  }
-}
-
-export function sequenceIcons(sequence: Sequence): SequenceIcon[] {
-  switch (convertSequenceState(sequence.state)) {
+export function sequenceIcons(sequence: ClientSequence): SequenceIcon[] {
+  switch (sequence.state) {
     case "NOT_STARTED":
       return ["not_started"];
 
@@ -79,6 +68,6 @@ export function sequenceIcons(sequence: Sequence): SequenceIcon[] {
   }
 }
 
-function doneSequenceIcon(sequence: Sequence): SequenceIcon[] {
+function doneSequenceIcon(sequence: ClientSequence): SequenceIcon[] {
   return sequence.resultsArePublished ? ["bar_chart"] : ["lock"];
 }
