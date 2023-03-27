@@ -12,7 +12,7 @@
 import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue";
 import { Ref } from "vue";
 import AppPage from "src/features/app/AppPage.vue";
-import { useSequenceDetail } from "src/features/assignment/sequence/sequence.query";
+import { useSequence } from "src/features/assignment/sequence/sequence.query";
 import { ServerSequence } from "src/features/assignment/sequence/sequence.interface";
 
 const props = defineProps({
@@ -28,7 +28,7 @@ const props = defineProps({
 
 // TODO Here, get directly the sequence from the server
 
-const { status, data, error } = useSequenceDetail(
+const { status, data, error } = useSequence(
   props.assignmentId,
   props.sequenceIndex
 );

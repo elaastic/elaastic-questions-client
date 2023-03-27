@@ -1,6 +1,5 @@
 import * as t from "io-ts";
 import {
-  ServerSequence,
   SequenceIcon,
   TServerSequence,
   ClientSequence,
@@ -20,18 +19,6 @@ export async function fetchSequenceList(
 
   const decoded = t.array(TServerSequence).decode(response.data);
   return validateData(decoded).map(convertSequence);
-}
-
-export async function fetchSequenceDetail(
-  assignmentId: number,
-  sequenceIndex: number
-): Promise<ServerSequence> {
-  const response = await api.get(
-    `/learner/assignment/${assignmentId}/sequences/${sequenceIndex}`
-  );
-
-  const decoded = TServerSequence.decode(response.data);
-  return validateData(decoded);
 }
 
 export function getActivePhase(sequence: ClientSequence): Phase | null {
