@@ -10,7 +10,6 @@
 <script setup lang="ts">
 import { computed, PropType } from "vue";
 import AbstractPhase from "src/features/assignment/sequence/phase/AbstractPhase.vue";
-import SequenceSteps from "src/features/assignment/sequence/SequenceSteps.vue";
 import "semantic-ui-step/step.css";
 import SequenceStatement from "src/features/assignment/sequence/SequenceStatement.vue";
 import { getActivePhase } from "src/features/assignment/sequence/sequence.service";
