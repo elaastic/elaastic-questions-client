@@ -1,78 +1,19 @@
 import {
   Assignment,
-  AssignmentSummary,
+  ServerAssignment,
+  ServerGetMyAssignment,
 } from "src/features/assignment/assignment.interface";
-import { faker } from "@faker-js/faker/locale/fr";
-import {
-  Sequence,
-  Statement,
-} from "src/features/assignment/sequence/sequence.interface";
-import { Phase } from "src/features/assignment/sequence/phase/phase.interface";
-import { pickRandomState } from "src/features/assignment/sequence/sequence.service";
-import { delay } from "src/util/dev";
+import { api } from "boot/axios";
+import { validateData } from "src/util/data";
 
-export async function fetchMyAssignments(): Promise<AssignmentSummary[]> {
+export async function fetchMyAssignments(): Promise<Assignment[]> {
+  const response = await api.get("/learner/assignments");
 
-  await delay(3000)
+  const decoded = ServerGetMyAssignment.decode(response.data);
+  const validated = validateData(decoded);
 
-  return mockMyAssignments().map((serverAssignmentSummary) => ({
-    ...serverAssignmentSummary,
-    lastUpdate: new Date(serverAssignmentSummary.lastUpdate),
+  return validated.map((assignment: ServerAssignment) => ({
+    ...assignment,
+    lastUpdated: new Date(assignment.lastUpdated),
   }));
 }
-
-export async function fetchAssignment(
-  assignmentId: number
-): Promise<Assignment> {
-  // await delay(3000) // Simulate latency
-  // throw new Error("Simulate error")
-  return mockAssignment(assignmentId);
-}
-
-function summarize(assignment: Assignment): AssignmentSummary {
-  return {
-    ...assignment,
-    nbSequence: assignment.sequences.length,
-  };
-}
-
-function mockMyAssignments(): AssignmentSummary[] {
-  const nbAssignments = faker.datatype.number({ min: 3, max: 10 });
-  return [...Array(nbAssignments).keys()]
-    .map(faker.datatype.number)
-    .map(mockAssignment)
-    .map(summarize);
-}
-
-const mockAssignment: (id: number) => Assignment = (id) => ({
-  id,
-  title: faker.lorem.words(),
-  lastUpdate: faker.date.between(
-    "2020-01-01T00:00:00.000Z",
-    "2030-01-01T00:00:00.000Z"
-  ),
-  sequences: [...Array(faker.datatype.number({ min: 3, max: 15 }))].map(
-    mockSequence
-  ),
-});
-
-const mockSequence: () => Sequence = () => ({
-  id: faker.datatype.number(),
-  statement: mockStatement(),
-  activeInteractionIndex: Math.trunc(Math.random() * 3),
-  phases: mockPhases(),
-  resultsArePublished: false,
-  state: pickRandomState(),
-});
-
-const mockStatement: () => Statement = () => ({
-  title: faker.lorem.words(),
-  content: faker.lorem.text(),
-});
-
-// TODO Randomize phase state
-const mockPhases: () => Phase[] = () => [
-  { type: "RESPONSE_SUBMISSION", state: "CLOSED" },
-  { type: "EVALUATION", state: "CLOSED" },
-  { type: "READ", state: "CLOSED" },
-];

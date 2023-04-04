@@ -10,8 +10,10 @@
 
 <script setup lang="ts">
 import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
-import { useAssignmentDetail } from "src/features/assignment/assignment.query";
+import { useAssignment } from "src/features/assignment/assignment.query";
 import AppPage from "src/features/app/AppPage.vue";
+import { Ref } from "vue";
+import { Assignment } from "src/features/assignment/assignment.interface";
 
 const props = defineProps({
   assignmentId: {
@@ -20,8 +22,6 @@ const props = defineProps({
   },
 });
 
-// TODO We should handle the case where we already have the AssignmentSummary but the full Assignment yet
-const { status, error, data } = useAssignmentDetail(props.assignmentId);
-
-const assignment = data;
+const { status, error, data } = useAssignment(props.assignmentId);
+const assignment: Ref<Assignment> | Ref<undefined> = data;
 </script>

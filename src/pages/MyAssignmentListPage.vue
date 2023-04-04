@@ -20,7 +20,7 @@
         <span class="assignment-title">{{ assignment.title }}</span
         ><br />
         <span class="assignment-lastUpdated">{{
-          formatDate(assignment.lastUpdate)
+          formatDate(assignment.lastUpdated)
         }}</span>
       </div>
       <div class="col-auto">

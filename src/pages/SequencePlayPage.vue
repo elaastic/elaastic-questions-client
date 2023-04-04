@@ -10,12 +10,10 @@
 
 <script setup lang="ts">
 import SequencePlayer from "src/features/assignment/sequence/SequencePlayer.vue";
-import { computed, Ref } from "vue";
-import { Assignment } from "src/features/assignment/assignment.interface";
-import { useAssignmentDetail } from "src/features/assignment/assignment.query";
-import { NotFoundError } from "src/features/error.interface";
-import { useRoute } from "vue-router";
+import { Ref } from "vue";
 import AppPage from "src/features/app/AppPage.vue";
+import { useSequence } from "src/features/assignment/sequence/sequence.query";
+import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
 
 const props = defineProps({
   assignmentId: {
@@ -28,24 +26,12 @@ const props = defineProps({
   },
 });
 
-const { status, data, error } = useAssignmentDetail(props.assignmentId);
-const assignment: Ref<Assignment> | Ref<undefined> = data;
+// TODO Here, get directly the sequence from the server
 
-const sequence = computed(() => {
-  if (!assignment.value) {
-    return null;
-  }
+const { status, data, error } = useSequence(
+  props.assignmentId,
+  props.sequenceIndex
+);
+const sequence: Ref<ClientSequence> | Ref<undefined> = data;
 
-  if (
-    props.sequenceIndex <= 0 ||
-    props.sequenceIndex > assignment.value.sequences.length
-  ) {
-    throw new NotFoundError(
-      `There is no sequence ${props.sequenceIndex} on this assignment`,
-      useRoute().path
-    );
-  }
-
-  return assignment.value.sequences[props.sequenceIndex - 1];
-});
 </script>

@@ -19,13 +19,13 @@
 <script setup lang="ts">
 import { computed, PropType } from "vue";
 import {
-  Sequence,
+  ClientSequence,
 } from "src/features/assignment/sequence/sequence.interface";
 import { sequenceIcons } from "src/features/assignment/sequence/sequence.service";
 
 const props = defineProps({
   sequence: {
-    type: Object as PropType<Sequence>,
+    type: Object as PropType<ClientSequence>,
     required: true,
   },
   num: Number,

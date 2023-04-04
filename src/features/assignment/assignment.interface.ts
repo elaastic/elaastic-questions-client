@@ -1,15 +1,15 @@
-import { Sequence } from "src/features/assignment/sequence/sequence.interface";
+import * as t from "io-ts";
 
-interface AssignmentBase {
-  id: number;
-  title: string;
-  lastUpdate: Date;
-}
+export const TServerAssignment = t.type({
+  id: t.number,
+  title: t.string,
+  lastUpdated: t.string,
+});
 
-export interface AssignmentSummary extends AssignmentBase {
-  nbSequence: number;
-}
+export type ServerAssignment = t.TypeOf<typeof TServerAssignment>;
+export type Assignment = Omit<ServerAssignment, "lastUpdated"> & {
+  lastUpdated: Date;
+};
 
-export interface Assignment extends AssignmentBase {
-  sequences: Sequence[]
-}
+
+export const ServerGetMyAssignment = t.array(TServerAssignment);
