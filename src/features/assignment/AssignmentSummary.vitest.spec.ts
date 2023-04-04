@@ -1,11 +1,10 @@
 import { installQuasarPlugin } from "@quasar/quasar-app-extension-testing-unit-vitest";
 import { describe, expect, it, Mock, vi } from "vitest";
 import { mount } from "@vue/test-utils";
-import { Assignment } from "src/features/assignment/assignment.interface";
-import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
 import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
 import { useSequenceList } from "src/features/assignment/sequence/sequence.query";
 import { ref } from "vue";
+import { AssignmentTestService } from "src/features/assignment/assignment.testService";
 
 installQuasarPlugin();
 
@@ -23,7 +22,7 @@ describe("Component for displaying the summary of an assignment", () => {
 
     const wrapper = mount(AssignmentSummary, {
       props: {
-        assignment: giveMeAnAssignment(),
+        assignment: AssignmentTestService.giveMeAnAssignment(),
       },
       global: {
         mocks: { $tc: (msg: string) => msg },
@@ -39,26 +38,3 @@ describe("Component for displaying the summary of an assignment", () => {
 
 
 });
-
-// TODO Factorize
-function giveMeAnAssignment(): Assignment {
-  return {
-    id: 123,
-    lastUpdated: new Date(),
-    title: "An assignment",
-  };
-}
-
-function giveMeSomeSequences(nb: number): ClientSequence[] {
-  return Array.from(Array(nb).keys()).map((i) => ({
-    activeInteractionIndex: undefined,
-    id: i,
-    phases: [],
-    resultsArePublished: false,
-    state: "NOT_STARTED",
-    statement: {
-      content: `content ${i}`,
-      title: `statement ${i}`,
-    },
-  }));
-}

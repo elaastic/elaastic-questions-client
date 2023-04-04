@@ -2,10 +2,9 @@ import { installQuasarPlugin } from "@quasar/quasar-app-extension-testing-unit-v
 import { describe, expect, it, Mock, vi } from "vitest";
 import { mount } from "@vue/test-utils";
 import AssignmentContent from "src/features/assignment/AssignmentContent.vue";
-import { Assignment } from "src/features/assignment/assignment.interface";
-import { ClientSequence } from "src/features/assignment/sequence/sequence.interface";
 import { useRouter } from "vue-router";
 import SequenceSummary from "src/features/assignment/sequence/SequenceSummary.vue";
+import { AssignmentTestService } from "src/features/assignment/assignment.testService";
 
 installQuasarPlugin();
 
@@ -17,7 +16,7 @@ describe("Component for displaying the content of an assignment (i.e. its sequen
   it("should displays a warning message for empty assignment", () => {
     const wrapper = mount(AssignmentContent, {
       props: {
-        assignment: giveMeAnAssignment(),
+        assignment: AssignmentTestService.giveMeAnAssignment(),
         sequences: [],
       },
     });
@@ -33,13 +32,13 @@ describe("Component for displaying the content of an assignment (i.e. its sequen
       push,
     }));
 
-    const assignment = giveMeAnAssignment();
+    const assignment = AssignmentTestService.giveMeAnAssignment();
     const selectedSequenceIndex = 2;
 
     const wrapper = mount(AssignmentContent, {
       props: {
         assignment: assignment,
-        sequences: giveMeSomeSequences(3),
+        sequences: AssignmentTestService.giveMeSomeSequences(3),
       },
     });
 
@@ -57,25 +56,3 @@ describe("Component for displaying the content of an assignment (i.e. its sequen
     });
   });
 });
-
-function giveMeAnAssignment(): Assignment {
-  return {
-    id: 123,
-    lastUpdated: new Date(),
-    title: "An assignment",
-  };
-}
-
-function giveMeSomeSequences(nb: number): ClientSequence[] {
-  return Array.from(Array(nb).keys()).map((i) => ({
-    activeInteractionIndex: undefined,
-    id: i,
-    phases: [],
-    resultsArePublished: false,
-    state: "NOT_STARTED",
-    statement: {
-      content: `content ${i}`,
-      title: `statement ${i}`,
-    },
-  }));
-}
