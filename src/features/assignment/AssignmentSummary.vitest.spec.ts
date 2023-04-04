@@ -5,6 +5,8 @@ import AssignmentSummary from "src/features/assignment/AssignmentSummary.vue";
 import { useSequenceList } from "src/features/assignment/sequence/sequence.query";
 import { ref } from "vue";
 import { AssignmentTestService } from "src/features/assignment/assignment.testService";
+import PageTitle from "src/features/app/PageTitle.vue";
+import SequenceSummary from "src/features/assignment/sequence/SequenceSummary.vue";
 
 installQuasarPlugin();
 
@@ -24,9 +26,7 @@ describe("Component for displaying the summary of an assignment", () => {
       props: {
         assignment: AssignmentTestService.giveMeAnAssignment(),
       },
-      global: {
-        mocks: { $tc: (msg: string) => msg },
-      },
+      ...mockI18n(),
     });
 
     const errorPanel = wrapper.find("div.q-banner[role='alert']");
@@ -39,24 +39,44 @@ describe("Component for displaying the summary of an assignment", () => {
       status: ref("loading"),
     }));
 
-    // TODO Factorize
     const wrapper = mount(AssignmentSummary, {
       props: {
         assignment: AssignmentTestService.giveMeAnAssignment(),
       },
-      global: {
-        mocks: { $tc: (msg: string) => msg },
-      },
+      ...mockI18n(),
     });
 
     const loadingPanel = wrapper.find(".q-inner-loading");
     expect(loadingPanel.exists()).toBeTruthy();
-    expect(loadingPanel.text()).toContain("assignment.loading")
+    expect(loadingPanel.text()).toContain("assignment.loading");
   });
 
   it("should display the assignment title and its sequences when ready", () => {
-    expect("TODO").toBeFalsy();
-  })
+    (useSequenceList as Mock).mockImplementation(() => ({
+      status: ref("success"),
+      data: ref(AssignmentTestService.giveMeSomeSequences(3)),
+    }));
 
-  // TODO Should also check the title is displayed
+    const assignment = AssignmentTestService.giveMeAnAssignment();
+    const wrapper = mount(AssignmentSummary, {
+      props: {
+        assignment: assignment,
+      },
+      ...mockI18n(),
+    });
+
+    expect(wrapper.findComponent(PageTitle).exists()).toBeTruthy();
+    expect(wrapper.findComponent(PageTitle).props()["title"]).toEqual(
+      assignment.title
+    );
+    expect(wrapper.findAllComponents(SequenceSummary).length).toBe(3);
+  });
+
+  function mockI18n() {
+    return {
+      global: {
+        mocks: { "$tc": (msg: string) => msg },
+      },
+    };
+  }
 });
