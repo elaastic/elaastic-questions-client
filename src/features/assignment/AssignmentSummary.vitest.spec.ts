@@ -13,7 +13,7 @@ describe("Component for displaying the summary of an assignment", () => {
     useSequenceList: vi.fn(),
   }));
 
-  it("should displays an error message when an error occurs while loading asynchronously the assignment content", () => {
+  it("should displays an error message when an error occurs while loading asynchronously the assignment sequences", () => {
     const serverErrorMsg = "There is an error !";
     (useSequenceList as Mock).mockImplementation(() => ({
       status: ref("error"),
@@ -29,12 +29,34 @@ describe("Component for displaying the summary of an assignment", () => {
       },
     });
 
-    console.log(wrapper.html());
-
     const errorPanel = wrapper.find("div.q-banner[role='alert']");
     expect(errorPanel.exists()).toBeTruthy();
     expect(errorPanel.text()).toContain(serverErrorMsg);
   });
 
+  it("should displays a loading message while loading asynchronously the assignment sequences", () => {
+    (useSequenceList as Mock).mockImplementation(() => ({
+      status: ref("loading"),
+    }));
 
+    // TODO Factorize
+    const wrapper = mount(AssignmentSummary, {
+      props: {
+        assignment: AssignmentTestService.giveMeAnAssignment(),
+      },
+      global: {
+        mocks: { $tc: (msg: string) => msg },
+      },
+    });
+
+    const loadingPanel = wrapper.find(".q-inner-loading");
+    expect(loadingPanel.exists()).toBeTruthy();
+    expect(loadingPanel.text()).toContain("assignment.loading")
+  });
+
+  it("should display the assignment title and its sequences when ready", () => {
+    expect("TODO").toBeFalsy();
+  })
+
+  // TODO Should also check the title is displayed
 });
