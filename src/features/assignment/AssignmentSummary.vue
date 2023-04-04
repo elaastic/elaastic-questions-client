@@ -1,7 +1,7 @@
 <template>
   <page-title icon="menu_book" :title="assignment.title" />
 
-  <app-data-loader :status="status" :error="error" loading-message="TODO I18N">
+  <app-data-loader :status="status" :error="error" :loading-message="$tc('assignment.loading', 1)">
     <assignment-content
       :assignment="assignment"
       :sequences="sequences"
@@ -27,6 +27,7 @@ const props = defineProps({
 });
 
 const { status, error, data } = useSequenceList(props.assignment.id);
+
 const sequences: Ref<ClientSequence[]> | Ref<undefined> = data;
 </script>
 
