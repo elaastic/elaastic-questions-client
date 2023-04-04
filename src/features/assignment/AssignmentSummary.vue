@@ -1,7 +1,7 @@
 <template>
   <page-title icon="menu_book" :title="assignment.title" />
 
-  <app-data-loader :status="status" :error="error" :loading-message="$tc('assignment.loading', 1)">
+  <app-data-loader :status="status" :error="error" :loading-message="$t('assignment.loading', 1)">
     <assignment-content
       :assignment="assignment"
       :sequences="sequences"

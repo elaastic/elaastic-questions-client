@@ -75,7 +75,7 @@ describe("Component for displaying the summary of an assignment", () => {
   function mockI18n() {
     return {
       global: {
-        mocks: { "$tc": (msg: string) => msg },
+        mocks: { "$t": (msg: string) => msg },
       },
     };
   }
