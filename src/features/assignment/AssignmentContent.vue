@@ -6,9 +6,11 @@
   <div class="q-ma-sm sequences" v-bind="$attrs" v-else>
     <sequence-summary
       v-for="(sequence, index) in sequences"
-      :key="sequence.id"
+      :id="`sequence-${assignment.id}-${index}`"
+      :key="`${assignment.id}-${index}`"
       :sequence="sequence"
       :num="index + 1"
+      class="sequence"
       @click="openSequence(index)"
     />
   </div>
@@ -37,6 +39,7 @@ const nbSequences = computed(() => props.sequences.length);
 const router = useRouter();
 
 function openSequence(sequenceIndex: number) {
+
   router.push({
     name: "play-sequence",
     params: {
